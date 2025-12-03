@@ -11,7 +11,6 @@
     background-position: -5px -5px;
   }
 
-  /* HEADER */
   .app-header {
     display: flex;
     justify-content: center;
@@ -39,16 +38,13 @@
     flex-direction: column;
   }
 
-  h1, h2 {
-    margin: 0;
-  }
+  h1, h2 { margin: 0; }
 
   #marca {
     width: 40px;
     height: 40px;
   }
 
-  /* SECTION CONTAINER */
   .section-wrapper {
     width: 90%;
     max-width: 1100px;
@@ -73,7 +69,6 @@
     margin: -5px auto 25px auto;
   }
 
-  /* SKILLS */
   .skills-grid {
     display: flex;
     flex-wrap: wrap;
@@ -104,7 +99,6 @@
     font-size: 14px;
   }
 
-  /* PROJECTS */
   .projects-grid {
     display: flex;
     flex-wrap: wrap;
@@ -139,6 +133,23 @@
     height: 200px;
   }
 
+  .download-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: rgba(255, 0, 150, 0.8);
+    padding: 10px 16px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .download-btn:hover {
+    background-color: rgba(255, 0, 150, 1);
+  }
+
   .footer {
     margin-top: 60px;
     text-align: center;
@@ -147,158 +158,162 @@
     font-size: 14px;
   }
 </style>
-
 <body>
 
-  <!-- HEADER -->
-  <header class="app-header">
-    <div class="profile-card">
-      <img id="perfil" src="https://imgur.com/IisFx51.png" width="60" height="60"/>
-      <div class="texts">
-        <h1 style="font-size: 20px;">Henrique Silva</h1>
-        <h2 style="color: rgb(209, 209, 209); font-size: 12px;" translate="no">Developer</h2>
-      </div>
-      <img id="marca" src="https://imgur.com/unzdq22.png">
+<header class="app-header">
+  <div class="profile-card">
+    <img id="perfil" src="https://imgur.com/IisFx51.png" width="60" height="60" />
+    <div class="texts">
+      <h1 style="font-size: 20px;">Henrique Silva</h1>
+      <h2 style="color: rgb(209, 209, 209); font-size: 12px;" translate="no">Developer</h2>
     </div>
-  </header>
+    <img id="marca" src="https://imgur.com/unzdq22.png" />
+  </div>
+</header>
 
-  <!-- SKILLS -->
-  <div class="section-wrapper">
-    <p class="section-title">Skills</p>
-    <hr class="section-line">
+<div class="section-wrapper">
+  <p class="section-title">Skills</p>
+  <hr class="section-line">
 
-    <div class="skills-grid">
-      <div class="skill-block" data-category="minecraft">
-        <div class="skill-title">Minecraft</div>
-        <span class="badge">Spigot API</span>
-        <span class="badge">Bukkit API</span>
-        <span class="badge">Paper API</span>
-        <span class="badge">Java</span>
+  <div class="skills-grid">
+    <div class="skill-block" data-category="minecraft">
+      <div class="skill-title">Minecraft</div>
+      <span class="badge">Spigot API</span>
+      <span class="badge">Bukkit API</span>
+      <span class="badge">Paper API</span>
+      <span class="badge">Java</span>
+    </div>
+
+    <div class="skill-block" data-category="discord">
+      <div class="skill-title">Discord</div>
+      <span class="badge">JavaScript</span>
+      <span class="badge">Python</span>
+      <span class="badge">Discord API</span>
+    </div>
+
+    <div class="skill-block" data-category="web">
+      <div class="skill-title">Website</div>
+      <span class="badge">Angular</span>
+      <span class="badge">HTML</span>
+      <span class="badge">CSS</span>
+      <span class="badge">JavaScript</span>
+      <span class="badge">TypeScript</span>
+    </div>
+
+    <div class="skill-block" data-category="db">
+      <div class="skill-title">DataBase</div>
+      <span class="badge">MySQL</span>
+      <span class="badge">SQLite</span>
+    </div>
+  </div>
+</div>
+
+<div class="section-wrapper">
+  <p class="section-title">Projects</p>
+  <hr class="section-line">
+
+  <div class="projects-grid">
+
+    <div class="project-block" data-category="plugin">
+      <h3 class="project-title">LIZTalismans<br>1.21</h3>
+      <p>A system for creating talismans, they apply effects when inside the inventory or hotbar, with ItemsAdder support.</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/M8edZN9W4BY"></iframe>
       </div>
+      <span class="badge">Spigot API</span>
+      <span class="badge">Minecraft</span>
+      <span class="badge">Java</span>
+      <br>
+      <a class="download-btn" href="assets/plugins/LIZTalismans-1.2.jar" download>Download</a>
+    </div>
 
-      <div class="skill-block" data-category="discord">
-        <div class="skill-title">Discord</div>
-        <span class="badge">JavaScript</span>
-        <span class="badge">Python</span>
-        <span class="badge">Discord API</span>
+    <div class="project-block" data-category="plugin">
+      <h3 class="project-title">LIZCorreio<br>1.19 - 1.21</h3>
+      <p>A mailbox where players can craft and send packages to each other.</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/rfpHJCJMtpw"></iframe>
       </div>
+      <span class="badge">Spigot API</span>
+      <span class="badge">Minecraft</span>
+      <span class="badge">Java</span>
+      <span class="badge">SQLite</span>
+      <br>
+      <a class="download-btn" href="assets/plugins/LIZCorreio-1.1.jar" download>Download</a>
+    </div>
 
-      <div class="skill-block" data-category="web">
-        <div class="skill-title">Website</div>
-        <span class="badge">Angular</span>
-        <span class="badge">HTML</span>
-        <span class="badge">CSS</span>
-        <span class="badge">JavaScript</span>
-        <span class="badge">TypeScript</span>
+    <div class="project-block" data-category="plugin">
+      <h3 class="project-title">LIZTerrenos<br>1.19 - 1.21</h3>
+      <p>This plugin is for buying land, with block break protection, interaction and others.</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/COtVKlkEKoQ"></iframe>
       </div>
+      <span class="badge">Spigot API</span>
+      <span class="badge">Minecraft</span>
+      <span class="badge">MySQL</span>
+      <span class="badge">Java</span>
+      <br>
+      <a class="download-btn" href="assets/plugins/LIZTerrenos-1.6.jar" download>Download</a>
+    </div>
 
-      <div class="skill-block" data-category="db">
-        <div class="skill-title">DataBase</div>
-        <span class="badge">MySQL</span>
-        <span class="badge">SQLite</span>
+    <div class="project-block" data-category="plugin">
+      <h3 class="project-title">LIZPotions<br>1.8 - 1.21</h3>
+      <p>Create potions with mixed effects and custom durations, as well as your own shop.<br>The shop automatically increases in size based on the number of potions created.</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/DuAp3Gvj7vc"></iframe>
+      </div>
+      <span class="badge">Spigot API</span>
+      <span class="badge">Minecraft</span>
+      <span class="badge">Java</span>
+      <br>
+      <a class="download-btn" href="assets/plugins/LIZPotions-1.0.jar" download>Download</a>
+    </div>
+
+    <div class="project-block" data-category="plugin">
+      <h3 class="project-title">LIZCombate<br>1.8 - 1.21</h3>
+      <p>When a player enters combat mode, they will lose access to all commands not listed in the configuration.<br>If the player logs out of combat, they will be declared dead and their inventory will be dropped.</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/dcKN_7nfvJ8"></iframe>
+      </div>
+      <span class="badge">Spigot API</span>
+      <span class="badge">Minecraft</span>
+      <span class="badge">Java</span>
+      <br>
+      <a class="download-btn" href="assets/plugins/LIZCombate-1.0.jar" download>Download</a>
+    </div>
+
+    <div class="project-block" data-category="plugin">
+      <h3 class="project-title">LIZEtiqueta<br>1.19 - 1.21</h3>
+      <p>A plugin to rename nametags just by tapping while holding them, thus being able to disable anvils.</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/4gaXPIdRLqU"></iframe>
+      </div>
+      <span class="badge">Spigot API</span>
+      <span class="badge">Minecraft</span>
+      <span class="badge">Java</span>
+      <br>
+      <a class="download-btn" href="assets/plugins/LIZEtiqueta.jar" download>Download</a>
+    </div>
+
+    <div class="project-block" data-category="bot">
+      <h3 class="project-title">Discord Ticket Bot</h3>
+      <p>Simple discord bot</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/tS1AZx1kF0g"></iframe>
+      </div>
+    </div>
+
+    <div class="project-block" data-category="bot">
+      <h3 class="project-title">Discord Sales Bot</h3>
+      <p>Intermediate bot</p>
+      <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/Np7fNETtnSM"></iframe>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- PROJECTS -->
-  <div class="section-wrapper">
-    <p class="section-title">Projects</p>
-    <hr class="section-line">
+<footer class="footer">
+  <p>© 2025 Henrique Silva — Todos os direitos reservados.</p>
+</footer>
 
-    <div class="projects-grid">
-
-      <!-- PLUGINS -->
-      <div class="project-block" data-category="plugin">
-        <h3 class="project-title">LIZTalismans<br>1.21</h3>
-        <p>A system for creating talismans, they apply effects when inside the inventory or hotbar, with ItemsAdder support.</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/M8edZN9W4BY"></iframe>
-        </div>
-        <span class="badge">Spigot API</span>
-        <span class="badge">Minecraft</span>
-        <span class="badge">Java</span>
-      </div>
-
-      <div class="project-block" data-category="plugin">
-        <h3 class="project-title">LIZCorreio<br>1.19 - 1.21</h3>
-        <p>A mailbox where players can craft and send packages to each other.</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/rfpHJCJMtpw"></iframe>
-        </div>
-        <span class="badge">Spigot API</span>
-        <span class="badge">Minecraft</span>
-        <span class="badge">Java</span>
-        <span class="badge">SQLite</span>
-      </div>
-
-      <div class="project-block" data-category="plugin">
-        <h3 class="project-title">LIZTerrenos<br>1.19 - 1.21</h3>
-        <p>This plugin is for buying land, with block break protection, interaction and others.</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/COtVKlkEKoQ"></iframe>
-        </div>
-        <span class="badge">Spigot API</span>
-        <span class="badge">Minecraft</span>
-        <span class="badge">MySQL</span>
-        <span class="badge">Java</span>
-      </div>
-
-      <div class="project-block" data-category="plugin">
-        <h3 class="project-title">LIZPotions<br>1.8 - 1.21</h3>
-        <p>Create potions with mixed effects and custom durations, as well as your own shop.<br>The shop automatically increases in size based on the number of potions created.</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/DuAp3Gvj7vc"></iframe>
-        </div>
-        <span class="badge">Spigot API</span>
-        <span class="badge">Minecraft</span>
-        <span class="badge">Java</span>
-      </div>
-
-      <div class="project-block" data-category="plugin">
-        <h3 class="project-title">LIZCombate<br>1.8 - 1.21</h3>
-        <p>When a player enters combat mode, they will lose access to all commands not listed in the configuration.<br>If the player logs out of combat, they will be declared dead and their inventory will be dropped.</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/dcKN_7nfvJ8"></iframe>
-        </div>
-        <span class="badge">Spigot API</span>
-        <span class="badge">Minecraft</span>
-        <span class="badge">Java</span>
-      </div>
-
-      <div class="project-block" data-category="plugin">
-        <h3 class="project-title">LIZEtiqueta<br>1.19 - 1.21</h3>
-        <p>A plugin to rename nametags just by tapping while holding them, thus being able to disable anvils.</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/4gaXPIdRLqU"></iframe>
-        </div>
-        <span class="badge">Spigot API</span>
-        <span class="badge">Minecraft</span>
-        <span class="badge">Java</span>
-      </div>
-
-      <!-- BOTS -->
-      <div class="project-block" data-category="bot">
-        <h3 class="project-title">Discord Ticket Bot</h3>
-        <p>Simple discord bot</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/tS1AZx1kF0g"></iframe>
-        </div>
-      </div>
-
-      <div class="project-block" data-category="bot">
-        <h3 class="project-title">Discord Sales Bot</h3>
-        <p>Intermediate bot</p>
-        <div class="video-container">
-          <iframe src="https://www.youtube.com/embed/Np7fNETtnSM"></iframe>
-        </div>
-      </div>
-
-    </div>
-  </div>
-
-  <footer class="footer">
-    <p>© 2025 Henrique Silva — Todos os direitos reservados.</p>
-  </footer>
 </body>
-
-<router-outlet/>
