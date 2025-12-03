@@ -6,89 +6,96 @@
     color: white;
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(32deg,rgba(8, 8, 8, 0.74) 30px, transparent
-    );
+    background-image: linear-gradient(32deg, rgba(8, 8, 8, 0.74) 30px, transparent);
     background-size: 60px 60px;
     background-position: -5px -5px;
   }
 
-  .app-header{
+  /* HEADER */
+  .app-header {
     display: flex;
     justify-content: center;
-    align-items: center;
-    margin: auto;
-    padding-top: 20px;
+    padding-top: 35px;
   }
 
-  .profile-card{
+  .profile-card {
     display: flex;
     background-color: rgb(49, 49, 49);
-    padding: 10px 20px;
-    border-radius: 13px;
-    gap: 20px;
+    padding: 16px 30px;
+    border-radius: 15px;
+    gap: 25px;
     align-items: center;
+    box-shadow: 0 0 15px rgba(255, 0, 150, 0.35);
+    border: 1px solid rgba(255, 0, 150, 0.25);
   }
 
-  #perfil{
+  #perfil {
     border: 3px solid rgba(255, 0, 150, 0.9);
     border-radius: 10px;
   }
 
-  .texts{
+  .texts {
     display: flex;
     flex-direction: column;
   }
 
-  h1, h2{
+  h1, h2 {
     margin: 0;
   }
 
-  #marca{
-    width: 35px;
-    height: 35px;
-  }
-  .footer{
-    margin-top: 60px;
-    text-align: center;
-    padding: 20px 0;
-    color: #bbb;
-    font-size: 14px;
-  }
-  /* Main */
-  .main{
-    text-align: center;
-    margin-top: 40px;
+  #marca {
+    width: 40px;
+    height: 40px;
   }
 
-  .skills-title{
-    font-size: 32px;
-    margin-bottom: 25px;
-  }
-
-  /* Skills */
-  .skills-grid{
+  /* SECTION CONTAINER */
+  .section-wrapper {
     width: 90%;
-    max-width: 900px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #2b2b2b;
+    border-radius: 18px;
+    border: 1px solid #444;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .section-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: rgba(255, 0, 150, 0.9);
+  }
+
+  hr.section-line {
+    width: 150px;
+    border: 1px solid #555;
+    margin: -5px auto 25px auto;
+  }
+
+  /* SKILLS */
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
   }
 
-  .skill-block{
+  .skill-block {
     background-color: rgb(49, 49, 49);
     padding: 20px;
     border-radius: 15px;
     text-align: center;
+    width: 260px;
   }
 
-  .skill-title{
+  .skill-title {
     font-size: 22px;
     font-weight: bold;
     margin-bottom: 12px;
   }
 
-  .badge{
+  .badge {
     display: inline-block;
     background-color: #444;
     padding: 6px 14px;
@@ -97,36 +104,29 @@
     font-size: 14px;
   }
 
-  @media (max-width: 500px) {
-    .profile-card {
-      flex-direction: column;
-      text-align: center;
-    }
-  }
-  /* Projects */
-  .projects-grid{
-    width: 90%;
-    max-width: 1000px;
-    margin: auto;
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  /* PROJECTS */
+  .projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 25px;
   }
 
-  .project-block{
+  .project-block {
     background-color: rgb(49, 49, 49);
     padding: 20px;
     border-radius: 15px;
     text-align: center;
+    width: 320px;
   }
 
-  .project-title{
+  .project-title {
     font-size: 22px;
     margin-bottom: 15px;
     font-weight: bold;
   }
 
-  .video-container{
+  .video-container {
     width: 100%;
     background: #000;
     border-radius: 10px;
@@ -134,37 +134,41 @@
     margin-bottom: 15px;
   }
 
-  .video-container iframe,
-  .video-container video{
+  .video-container iframe {
     width: 100%;
     height: 200px;
   }
 
-  .project-badges .badge{
-    background-color: #444;
+  .footer {
+    margin-top: 60px;
+    text-align: center;
+    padding: 20px 0;
+    color: #bbb;
+    font-size: 14px;
   }
 </style>
+
 <body>
+
+  <!-- HEADER -->
   <header class="app-header">
     <div class="profile-card">
-        <img id="perfil" src="https://imgur.com/IisFx51.png" width="50" height="50"/>
-
-        <div class="texts">
-            <h1 style="font-size: 18px;">Henrique Silva</h1>
-            <h2 style="color: rgb(209, 209, 209); font-size: 11px;" translate="no">Developer</h2>
-        </div>
-
-        <img id="marca" src="https://imgur.com/unzdq22.png" alt="Marca">
+      <img id="perfil" src="https://imgur.com/IisFx51.png" width="60" height="60"/>
+      <div class="texts">
+        <h1 style="font-size: 20px;">Henrique Silva</h1>
+        <h2 style="color: rgb(209, 209, 209); font-size: 12px;" translate="no">Developer</h2>
+      </div>
+      <img id="marca" src="https://imgur.com/unzdq22.png">
     </div>
   </header>
 
-  <main class="main">
-    <!-- Skills -->
-    <p class="skills-title" style="color: rgba(255, 0, 150, 0.9);">Skills</p>
-    <hr style="width:140px; border:1px solid #555; margin:-10px auto 30px auto;">
+  <!-- SKILLS -->
+  <div class="section-wrapper">
+    <p class="section-title">Skills</p>
+    <hr class="section-line">
 
     <div class="skills-grid">
-      <div class="skill-block">
+      <div class="skill-block" data-category="minecraft">
         <div class="skill-title">Minecraft</div>
         <span class="badge">Spigot API</span>
         <span class="badge">Bukkit API</span>
@@ -172,14 +176,14 @@
         <span class="badge">Java</span>
       </div>
 
-      <div class="skill-block">
+      <div class="skill-block" data-category="discord">
         <div class="skill-title">Discord</div>
         <span class="badge">JavaScript</span>
         <span class="badge">Python</span>
         <span class="badge">Discord API</span>
       </div>
 
-      <div class="skill-block">
+      <div class="skill-block" data-category="web">
         <div class="skill-title">Website</div>
         <span class="badge">Angular</span>
         <span class="badge">HTML</span>
@@ -188,152 +192,113 @@
         <span class="badge">TypeScript</span>
       </div>
 
-      <div class="skill-block">
+      <div class="skill-block" data-category="db">
         <div class="skill-title">DataBase</div>
         <span class="badge">MySQL</span>
         <span class="badge">SQLite</span>
       </div>
     </div>
-    <!-- Projects -->
-    <p class="skills-title" style="color: rgba(255, 0, 150, 0.9); margin-top:60px;">Projects</p>
-    <hr style="width:160px; border:1px solid #555; margin:-10px auto 30px auto;">
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="section-wrapper">
+    <p class="section-title">Projects</p>
+    <hr class="section-line">
 
     <div class="projects-grid">
-    <!-- Plugins -->
-    <div class="project-block">
-      <h3 class="project-title">LIZTalismans<br>1.21</h3>
-      <p>A system for creating talismans, they apply effects when inside the inventory or hotbar, with ItemsAdder support.</p>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/M8edZN9W4BY" frameborder="0" allowfullscreen>
-        </iframe>
-      </div>
 
-      <div class="project-badges">
+      <!-- PLUGINS -->
+      <div class="project-block" data-category="plugin">
+        <h3 class="project-title">LIZTalismans<br>1.21</h3>
+        <p>A system for creating talismans, they apply effects when inside the inventory or hotbar, with ItemsAdder support.</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/M8edZN9W4BY"></iframe>
+        </div>
         <span class="badge">Spigot API</span>
         <span class="badge">Minecraft</span>
         <span class="badge">Java</span>
       </div>
-    </div>
 
-    <div class="project-block">
-      <h3 class="project-title">LIZCorreio<br>1.19 - 1.21</h3>
-      <p>A mailbox where players can craft and send packages to each other.</p>
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/rfpHJCJMtpw" frameborder="0" allowfullscreen>
-        </iframe>
-      </div>
-
-      <div class="project-badges">
+      <div class="project-block" data-category="plugin">
+        <h3 class="project-title">LIZCorreio<br>1.19 - 1.21</h3>
+        <p>A mailbox where players can craft and send packages to each other.</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/rfpHJCJMtpw"></iframe>
+        </div>
         <span class="badge">Spigot API</span>
         <span class="badge">Minecraft</span>
         <span class="badge">Java</span>
         <span class="badge">SQLite</span>
       </div>
-    </div>
 
-    <div class="project-block">
-      <h3 class="project-title">LIZTerrenos<br>1.19 - 1.21</h3>
-      <p>This plugin is for buying land, with block break protection, interaction and others.</p>
-
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/COtVKlkEKoQ" frameborder="0" allowfullscreen>
-        </iframe>
-      </div>
-
-      <div class="project-badges">
+      <div class="project-block" data-category="plugin">
+        <h3 class="project-title">LIZTerrenos<br>1.19 - 1.21</h3>
+        <p>This plugin is for buying land, with block break protection, interaction and others.</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/COtVKlkEKoQ"></iframe>
+        </div>
         <span class="badge">Spigot API</span>
         <span class="badge">Minecraft</span>
-        <span class="badge">Java</span>
         <span class="badge">MySQL</span>
-        <span class="badge">SQLite</span>
-      </div>
-    </div>
-
-    <div class="project-block">
-      <h3 class="project-title">LIZPotions<br>1.8 - 1.21</h3>
-      <p>Create potions with mixed effects and custom durations, as well as your own shop.<br>The shop automatically increases in size based on the number of potions created.</p>
-
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/DuAp3Gvj7vc" frameborder="0" allowfullscreen>
-        </iframe>
+        <span class="badge">Java</span>
       </div>
 
-      <div class="project-badges">
+      <div class="project-block" data-category="plugin">
+        <h3 class="project-title">LIZPotions<br>1.8 - 1.21</h3>
+        <p>Create potions with mixed effects and custom durations, as well as your own shop.<br>The shop automatically increases in size based on the number of potions created.</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/DuAp3Gvj7vc"></iframe>
+        </div>
         <span class="badge">Spigot API</span>
         <span class="badge">Minecraft</span>
         <span class="badge">Java</span>
       </div>
-    </div>
 
-    <div class="project-block">
-      <h3 class="project-title">LIZCombate<br>1.8 - 1.21</h3>
-      <p>When a player enters combat mode, they will lose access to all commands not listed in the configuration.<br>If the player logs out of combat, they will be declared dead and their inventory will be dropped.</p>
-
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/dcKN_7nfvJ8" frameborder="0" allowfullscreen>
-        </iframe>
-      </div>
-
-      <div class="project-badges">
+      <div class="project-block" data-category="plugin">
+        <h3 class="project-title">LIZCombate<br>1.8 - 1.21</h3>
+        <p>When a player enters combat mode, they will lose access to all commands not listed in the configuration.<br>If the player logs out of combat, they will be declared dead and their inventory will be dropped.</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/dcKN_7nfvJ8"></iframe>
+        </div>
         <span class="badge">Spigot API</span>
         <span class="badge">Minecraft</span>
         <span class="badge">Java</span>
       </div>
-    </div>
 
-    <div class="project-block">
-      <h3 class="project-title">LIZEtiqueta<br>1.19 - 1.21</h3>
-      <p>A plugin to rename nametags just by tapping while holding them, thus being able to disable anvils</p>
-
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/4gaXPIdRLqU" frameborder="0" allowfullscreen>
-        </iframe>
-      </div>
-
-      <div class="project-badges">
+      <div class="project-block" data-category="plugin">
+        <h3 class="project-title">LIZEtiqueta<br>1.19 - 1.21</h3>
+        <p>A plugin to rename nametags just by tapping while holding them, thus being able to disable anvils.</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/4gaXPIdRLqU"></iframe>
+        </div>
         <span class="badge">Spigot API</span>
         <span class="badge">Minecraft</span>
         <span class="badge">Java</span>
       </div>
-    </div>
-    <!-- Bots -->
-    <div class="project-block">
-      <h3 class="project-title">Discord Ticket Bot</h3>
-      <p>Simple bot</p>
 
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/tS1AZx1kF0g" frameborder="0" allowfullscreen>
-        </iframe>
+      <!-- BOTS -->
+      <div class="project-block" data-category="bot">
+        <h3 class="project-title">Discord Ticket Bot</h3>
+        <p>Simple discord bot</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/tS1AZx1kF0g"></iframe>
+        </div>
       </div>
 
-      <div class="project-badges">
-        <span class="badge">Python</span>
-        <span class="badge">Discord API</span>
-      </div>
-    </div>
-
-    <div class="project-block">
-      <h3 class="project-title">Discord Sales Bot</h3>
-      <p>Intermediate bot</p>
-
-      <div class="video-container">
-        <iframe src="https://www.youtube.com/embed/Np7fNETtnSM" frameborder="0" allowfullscreen>
-        </iframe>
+      <div class="project-block" data-category="bot">
+        <h3 class="project-title">Discord Sales Bot</h3>
+        <p>Intermediate bot</p>
+        <div class="video-container">
+          <iframe src="https://www.youtube.com/embed/Np7fNETtnSM"></iframe>
+        </div>
       </div>
 
-      <div class="project-badges">
-        <span class="badge">Python</span>
-        <span class="badge">Discord API</span>
-      </div>
     </div>
-
-    </div>
-  </main>
+  </div>
 
   <footer class="footer">
     <p>© 2025 Henrique Silva — Todos os direitos reservados.</p>
   </footer>
 </body>
 
-
-<router-outlet />
+<router-outlet/>
