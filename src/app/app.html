@@ -1,345 +1,162 @@
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
-
-:root{
-    --bg:#0d0d12;
-    --card:#18181f;
-    --card-hover:#20202a;
-    --border:#2d2d38;
-    --primary:#ff008c;
-    --primary-light:#ff4db4;
-    --text:#ffffff;
-    --text-secondary:#a8a8b3;
-}
-
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-}
-
-html{
-    scroll-behavior:smooth;
-}
-
-body{
-    font-family:'Inter',sans-serif;
-    color:var(--text);
-    min-height:100vh;
-    overflow-x:hidden;
-
-    background:
-    radial-gradient(circle at top left,
-    rgba(255,0,140,.15),
-    transparent 35%),
-
-    radial-gradient(circle at bottom right,
-    rgba(119,0,255,.15),
-    transparent 35%),
-
-    #0d0d12;
-}
-
-/* HEADER */
-
-.app-header{
-    display:flex;
-    justify-content:center;
-    padding:40px 20px;
-}
-
-.profile-card{
-    display:flex;
-    align-items:center;
-    gap:20px;
-
-    padding:20px 30px;
-
-    background:rgba(24,24,31,.95);
-
-    border:1px solid var(--border);
-    border-radius:22px;
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.35);
-
-    transition:.3s;
-}
-
-.profile-card:hover{
-    transform:translateY(-4px);
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.45),
-    0 0 30px rgba(255,0,140,.15);
-}
-
-#perfil{
-    width:80px;
-    height:80px;
-    object-fit:cover;
-
-    border-radius:18px;
-    border:3px solid var(--primary);
-}
-
-.texts{
-    display:flex;
-    flex-direction:column;
-}
-
-.texts h1{
-    font-size:1.3rem;
-    font-weight:800;
-}
-
-.texts h2{
-    margin-top:4px;
-    color:var(--text-secondary);
-    font-size:.9rem;
-    font-weight:500;
-}
-
-#marca{
-    width:40px;
-    height:40px;
-}
-
-/* SECTIONS */
-
-.section-wrapper{
-    width:min(1200px,90%);
-    margin:0 auto 40px auto;
-
-    padding:40px;
-
-    background:rgba(24,24,31,.95);
-
-    border:1px solid var(--border);
-    border-radius:28px;
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.25);
-}
-
-.section-title{
-    text-align:center;
-    font-size:2.2rem;
-    font-weight:800;
-
-    background:linear-gradient(
-    90deg,
-    var(--primary),
-    var(--primary-light)
-    );
-
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
-}
-
-.section-line{
-    width:120px;
-    margin:15px auto 35px auto;
-
-    border:none;
-    height:2px;
-
-    background:linear-gradient(
-    90deg,
-    transparent,
-    var(--primary),
-    transparent
-    );
-}
-
-/* SKILLS */
-
-.skills-grid{
-    display:grid;
-    grid-template-columns:
-    repeat(auto-fit,minmax(250px,1fr));
-
-    gap:20px;
-}
-
-.skill-block{
-    padding:25px;
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-    border-radius:20px;
-
-    transition:.3s;
-}
-
-.skill-block:hover{
-    transform:translateY(-5px);
-
-    background:var(--card-hover);
-
-    border-color:
-    rgba(255,0,140,.4);
-}
-
-.skill-title{
-    font-size:1.25rem;
-    font-weight:700;
-
-    margin-bottom:15px;
-}
-
-/* BADGES */
-
-.badge{
-    display:inline-block;
-
-    margin:4px;
-    padding:8px 14px;
-
-    background:
-    rgba(255,255,255,.05);
-
-    border:
-    1px solid rgba(255,255,255,.08);
-
-    border-radius:999px;
-
-    color:#ddd;
-    font-size:.85rem;
-}
-
-/* PROJECTS */
-
-.projects-grid{
-    display:grid;
-
-    grid-template-columns:
-    repeat(auto-fit,minmax(340px,1fr));
-
-    gap:25px;
-}
-
-.project-block{
-    display:flex;
-    flex-direction:column;
-
-    padding:20px;
-
-    background:var(--card);
-
-    border:1px solid var(--border);
-    border-radius:22px;
-
-    transition:.35s;
-}
-
-.project-block:hover{
-    transform:translateY(-8px);
-
-    background:var(--card-hover);
-
-    box-shadow:
-    0 15px 40px rgba(0,0,0,.35),
-    0 0 25px rgba(255,0,140,.1);
-}
-
-.project-title{
-    font-size:1.35rem;
-    font-weight:800;
-
-    margin-bottom:12px;
-}
-
-.project-block p{
-    color:var(--text-secondary);
-    line-height:1.7;
-    margin-bottom:15px;
-}
-
-/* VIDEO */
-
-.video-container{
-    overflow:hidden;
-
-    border-radius:14px;
-    margin-bottom:15px;
-}
-
-.video-container iframe{
-    width:100%;
-    aspect-ratio:16/9;
-
-    border:none;
-}
-
-/* BUTTON */
-
-.download-btn{
-    display:inline-flex;
-
-    justify-content:center;
-    align-items:center;
-
-    margin-top:15px;
-    padding:12px 18px;
-
-    background:
-    linear-gradient(
-    135deg,
-    var(--primary),
-    var(--primary-light)
-    );
-
-    color:white;
-    text-decoration:none;
-
-    font-size:.9rem;
-    font-weight:700;
-
-    border-radius:12px;
-
-    transition:.3s;
-}
-
-.download-btn:hover{
-    transform:translateY(-2px);
-
-    box-shadow:
-    0 0 25px rgba(255,0,140,.4);
-}
-
-/* FOOTER */
-
-.footer{
-    text-align:center;
-
-    padding:40px 20px;
-
-    color:var(--text-secondary);
-}
-
-/* RESPONSIVO */
-
-@media(max-width:768px){
-
-    .profile-card{
-        flex-direction:column;
-        text-align:center;
-    }
-
-    .section-wrapper{
-        padding:25px;
-    }
-
-    .section-title{
-        font-size:1.8rem;
-    }
-
-    .projects-grid{
-        grid-template-columns:1fr;
-    }
-}  
+  body {
+    background-color: #1a1a1a;
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: white;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(32deg, rgba(8, 8, 8, 0.74) 30px, transparent);
+    background-size: 60px 60px;
+    background-position: -5px -5px;
+  }
+
+  .app-header {
+    display: flex;
+    justify-content: center;
+    padding-top: 35px;
+  }
+
+  .profile-card {
+    display: flex;
+    background-color: rgb(49, 49, 49);
+    padding: 16px 30px;
+    border-radius: 15px;
+    gap: 25px;
+    align-items: center;
+    box-shadow: 0 0 15px rgba(255, 0, 150, 0.35);
+    border: 1px solid rgba(255, 0, 150, 0.25);
+  }
+
+  #perfil {
+    border: 3px solid rgba(255, 0, 150, 0.9);
+    border-radius: 10px;
+  }
+
+  .texts {
+    display: flex;
+    flex-direction: column;
+  }
+
+  h1, h2 { margin: 0; }
+
+  #marca {
+    width: 40px;
+    height: 40px;
+  }
+
+  .section-wrapper {
+    width: 90%;
+    max-width: 1100px;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #2b2b2b;
+    border-radius: 18px;
+    border: 1px solid #444;
+    box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
+  }
+
+  .section-title {
+    font-size: 32px;
+    margin-bottom: 10px;
+    text-align: center;
+    color: rgba(255, 0, 150, 0.9);
+  }
+
+  hr.section-line {
+    width: 150px;
+    border: 1px solid #555;
+    margin: -5px auto 25px auto;
+  }
+
+  .skills-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+  }
+
+  .skill-block {
+    background-color: rgb(49, 49, 49);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 260px;
+  }
+
+  .skill-title {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 12px;
+  }
+
+  .badge {
+    display: inline-block;
+    background-color: #444;
+    padding: 6px 14px;
+    margin: 5px;
+    border-radius: 20px;
+    font-size: 14px;
+  }
+
+  .projects-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 25px;
+  }
+
+  .project-block {
+    background-color: rgb(49, 49, 49);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    width: 320px;
+  }
+
+  .project-title {
+    font-size: 22px;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  .video-container {
+    width: 100%;
+    background: #000;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 15px;
+  }
+
+  .video-container iframe {
+    width: 100%;
+    height: 200px;
+  }
+
+  .download-btn {
+    display: inline-block;
+    margin-top: 10px;
+    background-color: rgba(255, 0, 150, 0.8);
+    padding: 10px 16px;
+    border-radius: 10px;
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: bold;
+    transition: 0.3s;
+  }
+
+  .download-btn:hover {
+    background-color: rgba(255, 0, 150, 1);
+  }
+
+  .footer {
+    margin-top: 60px;
+    text-align: center;
+    padding: 20px 0;
+    color: #bbb;
+    font-size: 14px;
+  }
 </style>
 <body>
 
