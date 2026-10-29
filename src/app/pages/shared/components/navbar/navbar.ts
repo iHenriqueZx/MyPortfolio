@@ -23,7 +23,7 @@ import { IdiomaService, Idioma } from '../../../../services/idioma.service';
 })
 export class Navbar implements OnInit, AfterViewInit, OnDestroy {
   autenticado = false;
-  idioma: Idioma = 'pt';
+  idioma: Idioma = 'en';
   quantidadeCarrinho = 0;
 
   private subscriptions = new Subscription();
