@@ -14,14 +14,14 @@ export class IdiomaService {
     this.obterIdiomaSalvo()
   );
 
-  idioma$ = this.idiomaSubject.asObservable();
+  readonly idioma$ = this.idiomaSubject.asObservable();
 
   get idiomaAtual(): Idioma {
     return this.idiomaSubject.value;
   }
 
   alternarIdioma(): void {
-    this.definirIdioma(this.idiomaAtual === 'pt' ? 'en' : 'pt');
+    this.definirIdioma(this.idiomaAtual === 'en' ? 'pt' : 'en');
   }
 
   definirIdioma(idioma: Idioma): void {
@@ -31,10 +31,15 @@ export class IdiomaService {
 
   private obterIdiomaSalvo(): Idioma {
     const idioma = localStorage.getItem(this.idiomaKey);
-    return idioma === 'en' ? 'en' : 'pt';
+
+    if (idioma === 'pt' || idioma === 'en') {
+      return idioma;
+    }
+
+    return 'en';
   }
 
   traduzir(pt: string, en: string): string {
-    return this.idiomaAtual === 'pt' ? pt : en;
+    return this.idiomaAtual === 'en' ? en : pt;
   }
 }
