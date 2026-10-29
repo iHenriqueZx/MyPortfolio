@@ -1,0 +1,190 @@
+
+<section class="plugins-page">
+  <div class="plugins-header">
+    <div>
+      <h1>{{ t('Plugins', 'Plugins') }}</h1>
+      <p>{{ t('Encontre plugins para melhorar e expandir seu servidor Minecraft.', 'Find plugins to improve and expand your Minecraft server.') }}</p>
+    </div>
+  </div>
+
+  <div class="plugins-toolbar">
+    <div class="search-box">
+      <input
+        type="text"
+        [placeholder]="t('Pesquisar plugins...', 'Search plugins...')"
+        [(ngModel)]="search"
+        [attr.aria-label]="t('Pesquisar plugins', 'Search plugins')"
+      >
+    </div>
+
+    <div class="plugin-filters">
+      <button type="button" [class.active]="selectedCategory === 'Todos'" (click)="setCategory('Todos')">{{ t('Todos', 'All') }}</button>
+      <button type="button" [class.active]="selectedCategory === 'Administração'" (click)="setCategory('Administração')">{{ t('Administração', 'Administration') }}</button>
+      <button type="button" [class.active]="selectedCategory === 'Customização'" (click)="setCategory('Customização')">{{ t('Customização', 'Customization') }}</button>
+      <button type="button" [class.active]="selectedCategory === 'Economia'" (click)="setCategory('Economia')">{{ t('Economia', 'Economy') }}</button>
+      <button type="button" [class.active]="selectedCategory === 'Gameplay'" (click)="setCategory('Gameplay')">Gameplay</button>
+      <button type="button" [class.active]="selectedCategory === 'Utilidades'" (click)="setCategory('Utilidades')">{{ t('Utilidades', 'Utilities') }}</button>
+    </div>
+  </div>
+
+  @if (carregando) {
+    <p class="plugins-message">{{ t('Carregando plugins...', 'Loading plugins...') }}</p>
+  } @else if (erro) {
+    <div class="plugins-message">
+      <p>{{ erro }}</p>
+      <button type="button" (click)="carregarPlugins()">{{ t('Tentar novamente', 'Try again') }}</button>
+    </div>
+  } @else if (filteredPlugins.length === 0) {
+    <p class="plugins-message">{{ t('Nenhum plugin encontrado.', 'No plugins found.') }}</p>
+  } @else {
+    <div class="plugins-grid">
+      @for (plugin of filteredPlugins; track plugin.id) {
+        <article
+          class="plugin-card"
+          role="button"
+          tabindex="0"
+          [attr.aria-label]="t('Ver detalhes de ', 'View details for ') + plugin.name"
+          (click)="openPlugin(plugin)"
+        >
+          <div class="plugin-card-top">
+            <div class="plugin-icon">{{ plugin.icon }}</div>
+            <span class="plugin-version">{{ plugin.version }}</span>
+          </div>
+
+          <div class="plugin-content">
+            <h2>{{ plugin.name }}</h2>
+            <p>{{ plugin.description }}</p>
+
+            <div class="plugin-tags">
+              @for (technology of plugin.technologies; track technology) {
+                <span>{{ technology }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="plugin-footer">
+            <span class="plugin-price">{{ plugin.price }}</span>
+
+            @if (plugin.gratuito && plugin.download) {
+              <a
+                class="plugin-button"
+                [href]="plugin.download"
+                (click)="$event.stopPropagation()"
+              >
+                {{ t('Download', 'Download') }}
+              </a>
+            } @else if (!plugin.gratuito) {
+              <button
+                type="button"
+                class="plugin-button"
+                (click)="adicionarAoCarrinho(plugin, $event)"
+              >
+                {{ t('Adicionar', 'Add to cart') }}
+              </button>
+            } @else {
+              <span class="plugin-button">{{ t('Em breve', 'Coming soon') }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
+
+@if (selectedPlugin) {
+  <div class="plugin-modal-overlay" (click)="closePlugin()">
+    <div
+      class="plugin-modal"
+      role="dialog"
+      aria-modal="true"
+      [attr.aria-label]="selectedPlugin.name"
+      (click)="$event.stopPropagation()"
+    >
+      <button
+        type="button"
+        class="plugin-modal-close"
+        (click)="closePlugin()"
+        [attr.aria-label]="t('Fechar', 'Close')"
+      >
+        ×
+      </button>
+
+      <div class="plugin-modal-header">
+        <div class="plugin-modal-icon">{{ selectedPlugin.icon }}</div>
+
+        <div>
+          <span class="plugin-modal-category">{{ selectedPlugin.category }}</span>
+          <h2>{{ selectedPlugin.name }}</h2>
+          <span class="plugin-modal-version">
+            {{ t('Versão', 'Version') }} {{ selectedPlugin.version }}
+          </span>
+        </div>
+      </div>
+
+      <div class="plugin-modal-content">
+        <p class="plugin-modal-description">{{ selectedPlugin.description }}</p>
+
+        <div class="plugin-modal-info">
+          <div class="plugin-info-item">
+            <span class="plugin-info-label">{{ t('Plataforma', 'Platform') }}</span>
+            <div class="plugin-info-tags">
+              @for (technology of selectedPlugin.technologies; track technology) {
+                <span>{{ technology }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="plugin-info-item">
+            <span class="plugin-info-label">{{ t('Categoria', 'Category') }}</span>
+            <strong>{{ selectedPlugin.category }}</strong>
+          </div>
+
+          <div class="plugin-info-item">
+            <span class="plugin-info-label">{{ t('Preço', 'Price') }}</span>
+            <strong>{{ selectedPlugin.price }}</strong>
+          </div>
+        </div>
+
+        @if (selectedPlugin.videoDemonstracao) {
+          <div class="plugin-info-item demo-video-item">
+            <span class="plugin-info-label">{{ t('Vídeo de demonstração', 'Demo video') }}</span>
+            <a
+              [href]="selectedPlugin.videoDemonstracao"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {{ t('Assistir demonstração', 'Watch demo') }}
+            </a>
+          </div>
+        }
+
+        @if (mensagemCarrinho) {
+          <p class="plugins-message" role="status">{{ mensagemCarrinho }}</p>
+        }
+      </div>
+
+      <div class="plugin-modal-footer">
+        <span class="plugin-modal-price">{{ selectedPlugin.price }}</span>
+
+        @if (selectedPlugin.gratuito && selectedPlugin.download) {
+          <a
+            class="plugin-modal-download"
+            [href]="selectedPlugin.download"
+          >
+            {{ t('Download', 'Download') }}
+          </a>
+        } @else if (!selectedPlugin.gratuito) {
+          <button
+            type="button"
+            class="plugin-modal-download"
+            (click)="adicionarAoCarrinho(selectedPlugin, $event)"
+          >
+            {{ t('Adicionar ao carrinho', 'Add to cart') }}
+          </button>
+        } @else {
+          <span class="plugin-modal-download">{{ t('Download em breve', 'Download coming soon') }}</span>
+        }
+      </div>
+    </div>
+  </div>
+}

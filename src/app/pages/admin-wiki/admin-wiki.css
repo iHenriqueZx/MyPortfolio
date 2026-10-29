@@ -1,0 +1,387 @@
+:host {
+  display: block;
+  min-width: 0;
+  min-height: 100vh;
+  color: #f3f3f7;
+  background: #0b0b10;
+}
+
+.wiki-admin {
+  width: min(1440px, 100%);
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 36px 28px 60px;
+  box-sizing: border-box;
+  color: #f5f5f7;
+  background: #0b0b10;
+}
+
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-bottom: 28px;
+}
+
+.eyebrow {
+  color: #ff008c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.page-header h1 {
+  margin: 8px 0;
+  font-size: clamp(28px, 4vw, 38px);
+  letter-spacing: -1px;
+}
+
+.page-header p,
+.panel-header p {
+  margin: 0;
+  color: #9999a8;
+  font-size: 14px;
+}
+
+.wiki-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(300px, 0.9fr);
+  align-items: start;
+  gap: 22px;
+}
+
+.editor-panel,
+.articles-panel {
+  min-width: 0;
+  padding: 24px;
+  border: 1px solid #292932;
+  border-radius: 14px;
+  background: #14141b;
+}
+
+.panel-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+.panel-header h2 {
+  margin: 0 0 7px;
+  font-size: 19px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-bottom: 20px;
+}
+
+.field label {
+  font-size: 13px;
+  font-weight: 700;
+  color: #e2e2eb;
+}
+
+.field input,
+.field select,
+.field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px 14px;
+  border: 1px solid #32323e;
+  border-radius: 9px;
+  outline: none;
+  background: #1b1b24;
+  color: #f5f5f7;
+  font: inherit;
+  font-size: 14px;
+  transition: border-color 0.2s;
+}
+
+.field input:focus,
+.field select:focus,
+.field textarea:focus {
+  border-color: #ff008c;
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: #777785;
+}
+
+.field select option {
+  color: #f5f5f7;
+  background: #1b1b24;
+}
+
+.field textarea {
+  min-height: 240px;
+  resize: vertical;
+  line-height: 1.65;
+}
+
+.field small,
+.publish-toggle small {
+  color: #858595;
+  font-size: 12px;
+  line-height: 1.5;
+}
+
+.slug-field {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-left: 12px;
+  border: 1px solid #32323e;
+  border-radius: 9px;
+  background: #1b1b24;
+}
+
+.slug-field span {
+  color: #ff008c;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.slug-field input {
+  border: 0;
+  background: transparent;
+}
+
+.slug-field input:focus {
+  border: 0;
+}
+
+.slug-field:focus-within {
+  border-color: #ff008c;
+}
+
+.publish-toggle {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid #292932;
+  border-radius: 10px;
+  background: #191920;
+  cursor: pointer;
+}
+
+.publish-toggle input {
+  margin-top: 4px;
+  accent-color: #ff008c;
+}
+
+.publish-toggle span {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.publish-toggle strong {
+  font-size: 13px;
+}
+
+.form-actions {
+  display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+}
+
+.primary-button,
+.secondary-button,
+.danger-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 40px;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.primary-button {
+  background: #ff008c;
+  color: #fff;
+}
+
+.primary-button:hover {
+  background: #d90077;
+}
+
+.primary-button:disabled,
+.secondary-button:disabled,
+.danger-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.secondary-button {
+  border-color: #373743;
+  background: #252530;
+  color: #e7e7ef;
+}
+
+.secondary-button:hover {
+  background: #393947;
+}
+
+.danger-button {
+  border-color: #592a35;
+  background: #321b23;
+  color: #ff9b9b;
+}
+
+.danger-button:hover {
+  background: #4a202d;
+}
+
+.status {
+  display: inline-flex;
+  align-items: center;
+  padding: 5px 9px;
+  border: 1px solid #4c4430;
+  border-radius: 20px;
+  background: #272116;
+  color: #e6c887;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+.status.published {
+  border-color: #245744;
+  background: #10281f;
+  color: #7de4b2;
+}
+
+.article-item {
+  padding: 17px 0;
+  border-top: 1px solid #292932;
+}
+
+.article-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.article-category {
+  color: #ff71bc;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.article-item h3 {
+  margin: 13px 0 6px;
+  color: #f5f5f7;
+  font-size: 16px;
+  overflow-wrap: anywhere;
+}
+
+.article-slug,
+.article-plugin,
+.article-date {
+  margin: 7px 0;
+  color: #9999a8;
+  font-size: 12px;
+  overflow-wrap: anywhere;
+}
+
+.article-plugin {
+  color: #d0b2ff;
+}
+
+.article-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}
+
+.empty-state,
+.loading {
+  padding: 32px 12px;
+  text-align: center;
+  color: #9999a8;
+}
+
+.empty-state strong {
+  display: block;
+  margin-top: 10px;
+  color: #e7e7ef;
+}
+
+.empty-state p {
+  color: #9999a8;
+  font-size: 13px;
+}
+
+.empty-icon {
+  font-size: 30px;
+  color: #ff008c;
+}
+
+.feedback {
+  margin-bottom: 18px;
+  padding: 13px 16px;
+  border: 1px solid;
+  border-radius: 9px;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+
+.feedback.success {
+  border-color: #245744;
+  background: #10281f;
+  color: #7de4b2;
+}
+
+.feedback.error {
+  border-color: #673044;
+  background: #2a131d;
+  color: #ff9cb6;
+}
+
+@media (max-width: 1000px) {
+  .wiki-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 600px) {
+  .wiki-admin {
+    padding: 24px 14px 40px;
+  }
+
+  .page-header {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .editor-panel,
+  .articles-panel {
+    padding: 17px;
+  }
+
+  .form-actions {
+    flex-direction: column-reverse;
+  }
+
+  .form-actions button {
+    width: 100%;
+  }
+}

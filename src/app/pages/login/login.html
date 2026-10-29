@@ -1,0 +1,67 @@
+
+<section class="login-page">
+  <div class="login-container">
+    <div class="login-header">
+      <h1>{{ t('Bem-vindo de volta', 'Welcome back') }}</h1>
+      <p>{{ t('Entre na sua conta para continuar.', 'Sign in to your account to continue.') }}</p>
+    </div>
+
+    <form class="login-form" (ngSubmit)="entrar()" #loginForm="ngForm">
+      <div class="form-group">
+        <label for="username">{{ t('Usuário ou e-mail', 'Username or email') }}</label>
+
+        <input
+          id="username"
+          name="identificador"
+          type="text"
+          [placeholder]="t('Digite seu usuário ou e-mail', 'Enter your username or email')"
+          autocomplete="username"
+          [(ngModel)]="identificador"
+          required
+          maxlength="254"
+          [disabled]="carregando"
+          (focus)="tocarSom('focus')"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="password">{{ t('Senha', 'Password') }}</label>
+
+        <input
+          id="password"
+          name="senha"
+          type="password"
+          [placeholder]="t('Digite sua senha', 'Enter your password')"
+          autocomplete="current-password"
+          [(ngModel)]="senha"
+          required
+          [disabled]="carregando"
+          (focus)="tocarSom('focus')"
+        >
+      </div>
+
+      @if (mensagemErro) {
+        <div class="alerta-login" role="alert">
+          <span class="alerta-icone">!</span>
+          <span class="alerta-texto">{{ mensagemErro }}</span>
+        </div>
+      }
+
+      <button
+        type="submit"
+        class="login-submit"
+        [disabled]="loginForm.invalid || carregando"
+        (click)="tocarSom('click')"
+      >
+        {{ carregando ? t('Entrando...', 'Signing in...') : t('Entrar', 'Sign in') }}
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <span>{{ t('Ainda não possui uma conta?', "Don't have an account yet?") }}</span>
+      <a routerLink="/register" (click)="tocarSom('click')">
+        {{ t('Criar conta', 'Create account') }}
+      </a>
+    </div>
+  </div>
+</section>

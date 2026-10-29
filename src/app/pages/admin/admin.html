@@ -1,0 +1,219 @@
+
+<section class="admin-page">
+  <aside class="admin-sidebar">
+    <a class="admin-brand" routerLink="/">
+      <span class="brand-main">LIZ</span>
+      <span class="brand-sub">ADMIN</span>
+    </a>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">{{ t('PRINCIPAL', 'MAIN') }}</span>
+
+      <a class="sidebar-link active" routerLink="/admin">
+        <span class="sidebar-icon">▦</span>
+        {{ t('Painel', 'Dashboard') }}
+      </a>
+
+      <a class="sidebar-link" routerLink="/plugins">
+        <span class="sidebar-icon">▣</span>
+        {{ t('Ver marketplace', 'View Marketplace') }}
+      </a>
+    </div>
+
+    <div class="sidebar-section">
+      <span class="sidebar-label">{{ t('GERENCIAMENTO', 'MANAGEMENT') }}</span>
+
+      <a class="sidebar-link" routerLink="/admin/plugins">
+        <span class="sidebar-icon">◈</span>
+        {{ t('Meus plugins', 'My Plugins') }}
+      </a>
+
+      <a class="sidebar-link" routerLink="/admin/plugins/novo">
+        <span class="sidebar-icon">＋</span>
+        {{ t('Adicionar plugin', 'Add Plugin') }}
+      </a>
+
+      <a class="sidebar-link" routerLink="/admin/wiki">
+        <span class="sidebar-icon">▤</span>
+        {{ t('Gerenciar Wiki', 'Manage Wiki') }}
+      </a>
+    </div>
+
+    <div class="sidebar-bottom">
+      <span class="admin-status"></span>
+      <div>
+        <strong>{{ t('Painel administrativo', 'Admin Panel') }}</strong>
+        <span>LIZ Plugins</span>
+      </div>
+    </div>
+  </aside>
+
+  <main class="admin-main">
+    <header class="admin-topbar">
+      <div>
+        <span class="admin-breadcrumb">
+          LIZ Plugins / {{ t('Painel', 'Dashboard') }}
+        </span>
+        <h1>{{ t('Painel', 'Dashboard') }}</h1>
+      </div>
+
+      <a class="view-store-button" routerLink="/plugins">
+        {{ t('Ver marketplace', 'View Marketplace') }} ↗
+      </a>
+    </header>
+
+    <section class="welcome-card">
+      <div>
+        <span class="welcome-label">
+          {{ t('PAINEL DE CONTROLE', 'CONTROL PANEL') }}
+        </span>
+
+        <h2>
+          {{ t('Bem-vindo ao painel da LIZ.', 'Welcome to the LIZ Dashboard.') }}
+        </h2>
+
+        <p>
+          {{ t(
+            'Gerencie seus plugins, publique artigos na Wiki e organize o catálogo da sua plataforma em um só lugar.',
+            'Manage your plugins, publish Wiki articles, and organize your platform catalog in one place.'
+          ) }}
+        </p>
+
+        <a class="welcome-button" routerLink="/admin/plugins/novo">
+          ＋ {{ t('Adicionar primeiro plugin', 'Add Your First Plugin') }}
+        </a>
+      </div>
+
+      <div class="welcome-decoration">LIZ</div>
+    </section>
+
+    <section class="stats-grid">
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>{{ t('Total de plugins', 'Total Plugins') }}</span>
+          <span class="stat-icon">◈</span>
+        </div>
+
+        <strong>{{ carregando ? '...' : totalPlugins }}</strong>
+
+        <span class="stat-description">
+          {{ t('Plugins no catálogo atual', 'Plugins in the current catalog') }}
+        </span>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>{{ t('Plugins gratuitos', 'Free Plugins') }}</span>
+          <span class="stat-icon">◇</span>
+        </div>
+
+        <strong>{{ carregando ? '...' : pluginsGratuitos }}</strong>
+
+        <span class="stat-description">
+          {{ t('Disponíveis gratuitamente', 'Available for free') }}
+        </span>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>{{ t('Plugins pagos', 'Paid Plugins') }}</span>
+          <span class="stat-icon">＄</span>
+        </div>
+
+        <strong>{{ carregando ? '...' : pluginsPagos }}</strong>
+
+        <span class="stat-description">
+          {{ t('Produtos pagos no catálogo', 'Paid products in the catalog') }}
+        </span>
+      </article>
+
+      <article class="stat-card">
+        <div class="stat-top">
+          <span>{{ t('Artigos da Wiki', 'Wiki Articles') }}</span>
+          <span class="stat-icon">▤</span>
+        </div>
+
+        <strong>{{ carregandoWiki ? '...' : totalPaginasWiki }}</strong>
+
+        <span class="stat-description">
+          {{ t('Artigos cadastrados', 'Registered articles') }}
+        </span>
+      </article>
+    </section>
+
+    <section class="admin-content-card">
+      <div class="content-card-header">
+        <div>
+          <h2>{{ t('Acesso rápido', 'Quick Access') }}</h2>
+
+          <p>
+            {{ t(
+              'Atalhos para os principais recursos administrativos.',
+              'Shortcuts to the main administrative features.'
+            ) }}
+          </p>
+        </div>
+      </div>
+
+      <div class="quick-actions">
+        <a class="quick-action" routerLink="/admin/plugins/novo">
+          <span class="quick-action-icon">＋</span>
+
+          <div>
+            <strong>{{ t('Adicionar plugin', 'Add Plugin') }}</strong>
+            <span>
+              {{ t('Cadastre um novo produto', 'Register a new product') }}
+            </span>
+          </div>
+
+          <span class="action-arrow">↗</span>
+        </a>
+
+        <a class="quick-action" routerLink="/admin/plugins">
+          <span class="quick-action-icon">◈</span>
+
+          <div>
+            <strong>{{ t('Gerenciar plugins', 'Manage Plugins') }}</strong>
+            <span>
+              {{ t('Consulte e edite o catálogo', 'Browse and edit the catalog') }}
+            </span>
+          </div>
+
+          <span class="action-arrow">↗</span>
+        </a>
+
+        <a class="quick-action" routerLink="/admin/wiki">
+          <span class="quick-action-icon">▤</span>
+
+          <div>
+            <strong>{{ t('Gerenciar Wiki', 'Manage Wiki') }}</strong>
+            <span>
+              {{ t(
+                'Crie, edite, publique e exclua artigos',
+                'Create, edit, publish, and delete articles'
+              ) }}
+            </span>
+          </div>
+
+          <span class="action-arrow">↗</span>
+        </a>
+
+        <a class="quick-action" routerLink="/plugins">
+          <span class="quick-action-icon">◎</span>
+
+          <div>
+            <strong>{{ t('Ver marketplace', 'View Marketplace') }}</strong>
+            <span>
+              {{ t(
+                'Veja a experiência dos visitantes',
+                'See the visitor experience'
+              ) }}
+            </span>
+          </div>
+
+          <span class="action-arrow">↗</span>
+        </a>
+      </div>
+    </section>
+  </main>
+</section>

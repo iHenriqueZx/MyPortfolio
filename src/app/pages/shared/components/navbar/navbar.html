@@ -1,0 +1,82 @@
+
+<nav class="navbar">
+  <div class="navbar-content">
+    <a class="brand" routerLink="/">
+      <span class="brand-main">LIZ</span>
+      <span class="brand-sub">PLUGINS</span>
+    </a>
+
+    <div class="nav-links">
+      <a
+        routerLink="/"
+        routerLinkActive="active"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+      >
+        {{ t('Início', 'Home') }}
+      </a>
+
+      <a
+        routerLink="/plugins"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        {{ t('Plugins', 'Plugins') }}
+      </a>
+
+      <a
+        routerLink="/wiki"
+        routerLinkActive="active"
+        class="nav-link"
+      >
+        {{ t('Wiki', 'Wiki') }}
+      </a>
+    </div>
+    
+    <div class="nav-actions">
+      <button
+        type="button"
+        class="language-button"
+        (click)="alternarIdioma()"
+        [attr.aria-label]="t('Mudar para inglês', 'Switch to Portuguese')"
+        [title]="t('Alterar idioma', 'Change language')"
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
+        </svg>
+
+        <span>{{ idioma === 'pt' ? 'PT-BR' : 'EN' }}</span>
+      </button>
+
+      @if (autenticado) {
+        <button
+          type="button"
+          (click)="irParaPerfil()"
+          class="login-button"
+        >
+          {{ t('Perfil', 'Profile') }}
+        </button>
+      } @else {
+        <a routerLink="/login" class="login-button">
+          {{ t('Entrar', 'Sign in') }}
+        </a>
+      }
+    </div>
+  </div>
+</nav>
+
+<button
+  type="button"
+  class="floating-language-button"
+  (click)="alternarIdioma()"
+  [attr.aria-label]="t('Mudar para inglês', 'Switch to Portuguese')"
+  [title]="t('Alterar idioma', 'Change language')"
+>
+        <svg viewBox="0 0 24 24" aria-hidden="true">
+          <circle cx="12" cy="12" r="9" />
+          <path d="M3 12h18M12 3a15 15 0 0 1 0 18M12 3a15 15 0 0 0 0 18" />
+        </svg>
+
+  {{ idioma === 'pt' ? 'Português' : 'English' }}
+</button>

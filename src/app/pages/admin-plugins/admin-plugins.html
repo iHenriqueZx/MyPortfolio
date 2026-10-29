@@ -1,0 +1,178 @@
+<section class="admin-plugins-page">
+  <header class="page-header">
+    <div>
+      <span class="page-eyebrow">{{ t('GERENCIAMENTO', 'MANAGEMENT') }}</span>
+      <h1>{{ t('Meus plugins', 'My Plugins') }}</h1>
+      <p>{{ t('Gerencie os plugins disponíveis no marketplace da LIZ.', 'Manage the plugins available in the LIZ marketplace.') }}</p>
+    </div>
+
+    <a class="primary-button" routerLink="/admin/plugins/novo">
+      <span>＋</span> {{ t('Adicionar plugin', 'Add Plugin') }}
+    </a>
+  </header>
+
+  <div class="plugins-summary">
+    <div>
+      <span>{{ t('Total de plugins', 'Total Plugins') }}</span>
+      <strong>{{ plugins.length }}</strong>
+    </div>
+    <div>
+      <span>{{ t('Gratuitos', 'Free') }}</span>
+      <strong>{{ totalGratuitos }}</strong>
+    </div>
+    <div>
+      <span>{{ t('Pagos', 'Paid') }}</span>
+      <strong>{{ totalPagos }}</strong>
+    </div>
+  </div>
+
+  <div class="filters-card">
+    <input
+      type="search"
+      [placeholder]="t('Pesquisar por nome, descrição ou tecnologia...', 'Search by name, description, or technology...')"
+      [(ngModel)]="busca"
+    >
+
+    <select [(ngModel)]="categoriaSelecionada">
+      @for (categoria of categorias; track categoria) {
+        <option [value]="categoria">{{ traduzirCategoria(categoria) }}</option>
+      }
+    </select>
+
+    <select [(ngModel)]="filtroPreco">
+      <option value="Todos">{{ t('Todos os preços', 'All Prices') }}</option>
+      <option value="Gratuitos">{{ t('Gratuitos', 'Free') }}</option>
+      <option value="Pagos">{{ t('Pagos', 'Paid') }}</option>
+    </select>
+  </div>
+
+  @if (mensagem) {
+    <div class="admin-message">{{ mensagem }}</div>
+  }
+
+  @if (carregando) {
+    <div class="empty-panel">{{ t('Carregando plugins...', 'Loading plugins...') }}</div>
+  } @else if (erro) {
+    <div class="empty-panel">
+      <p>{{ erro }}</p>
+      <button type="button" class="secondary-button" (click)="carregarPlugins()">
+        {{ t('Tentar novamente', 'Try Again') }}
+      </button>
+    </div>
+  } @else if (pluginsFiltrados.length === 0) {
+    <div class="empty-panel">
+      <h2>{{ t('Nenhum plugin encontrado', 'No Plugins Found') }}</h2>
+      <p>{{ t('Cadastre um plugin ou altere os filtros da pesquisa.', 'Add a plugin or change your search filters.') }}</p>
+      <a class="primary-button" routerLink="/admin/plugins/novo">
+        {{ t('Adicionar plugin', 'Add Plugin') }}
+      </a>
+    </div>
+  } @else {
+    <div class="plugins-table-card">
+      <div class="table-scroll">
+        <table>
+          <thead>
+            <tr>
+              <th>{{ t('Plugin', 'Plugin') }}</th>
+              <th>{{ t('Categoria', 'Category') }}</th>
+              <th>{{ t('Versão', 'Version') }}</th>
+              <th>{{ t('Preço', 'Price') }}</th>
+              <th>{{ t('Cadastro', 'Created') }}</th>
+              <th>{{ t('Ações', 'Actions') }}</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            @for (plugin of pluginsFiltrados; track plugin.id) {
+              <tr>
+                <td>
+                  <div class="plugin-name-cell">
+                    <div class="plugin-icon">
+                      {{ plugin.icone || plugin.nome.charAt(0).toUpperCase() }}
+                    </div>
+                    <div>
+                      <strong>{{ plugin.nome }}</strong>
+                      <span>{{ plugin.descricao }}</span>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  <span class="category-badge">{{ traduzirCategoria(plugin.categoria) }}</span>
+                </td>
+                <td>{{ plugin.versao }}</td>
+                <td>
+                  <span [class.free-price]="plugin.gratuito">
+                    {{ formatarPreco(plugin) }}
+                  </span>
+                </td>
+                <td>
+                  {{ plugin.dataCadastro ? (plugin.dataCadastro | date:'dd/MM/yyyy') : '—' }}
+                </td>
+                <td>
+                  <div class="row-actions">
+                    <a
+                      class="edit-button"
+                      [routerLink]="['/admin/plugins/editar', plugin.id]"
+                    >
+                      {{ t('Editar', 'Edit') }}
+                    </a>
+                    <button
+                      type="button"
+                      class="delete-button"
+                      (click)="solicitarExclusao(plugin)"
+                    >
+                      {{ t('Excluir', 'Delete') }}
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+
+      <footer class="table-footer">
+        {{ t('Exibindo', 'Showing') }} {{ pluginsFiltrados.length }} {{ t('de', 'of') }} {{ plugins.length }} {{ t('plugins', 'plugins') }}
+      </footer>
+    </div>
+  }
+</section>
+
+@if (pluginExclusao) {
+  <div class="confirmation-overlay" (click)="cancelarExclusao()">
+    <section
+      class="confirmation-modal"
+      role="dialog"
+      aria-modal="true"
+      aria-labelledby="delete-title"
+      (click)="$event.stopPropagation()"
+    >
+      <div class="confirmation-icon">!</div>
+      <h2 id="delete-title">{{ t('Excluir plugin?', 'Delete Plugin?') }}</h2>
+      <p>
+        {{ t('Você está prestes a excluir', 'You are about to delete') }}
+        <strong>{{ pluginExclusao.nome }}</strong>.
+        {{ t('Essa ação não pode ser desfeita.', 'This action cannot be undone.') }}
+      </p>
+
+      <div class="confirmation-actions">
+        <button
+          type="button"
+          class="secondary-button"
+          [disabled]="excluindo"
+          (click)="cancelarExclusao()"
+        >
+          {{ t('Cancelar', 'Cancel') }}
+        </button>
+        <button
+          type="button"
+          class="delete-button"
+          [disabled]="excluindo"
+          (click)="confirmarExclusao()"
+        >
+          {{ excluindo ? t('Excluindo...', 'Deleting...') : t('Confirmar exclusão', 'Confirm Deletion') }}
+        </button>
+      </div>
+    </section>
+  </div>
+}

@@ -1,0 +1,101 @@
+
+<section class="login-page">
+  <div class="login-container">
+    <div class="login-header">
+      <h1>{{ t('Criar conta', 'Create account') }}</h1>
+      <p>{{ t('Cadastre-se para começar a usar o LIZ Plugins.', 'Sign up to start using LIZ Plugins.') }}</p>
+    </div>
+
+    <form class="login-form" (ngSubmit)="cadastrar()" #registerForm="ngForm">
+      <div class="form-group">
+        <label for="nomeUsuario">{{ t('Nome de usuário', 'Username') }}</label>
+        <input
+          id="nomeUsuario"
+          name="nomeUsuario"
+          type="text"
+          [placeholder]="t('Escolha seu nome de usuário', 'Choose a username')"
+          autocomplete="username"
+          [(ngModel)]="nomeUsuario"
+          required
+          minlength="3"
+          maxlength="30"
+          pattern="[a-zA-Z0-9_]+"
+          [disabled]="carregando"
+          (focus)="tocarSom('focus')"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="email">{{ t('E-mail', 'Email') }}</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          [placeholder]="t('Digite seu e-mail', 'Enter your email')"
+          autocomplete="email"
+          [(ngModel)]="email"
+          required
+          maxlength="254"
+          [disabled]="carregando"
+          (focus)="tocarSom('focus')"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="senha">{{ t('Senha', 'Password') }}</label>
+        <input
+          id="senha"
+          name="senha"
+          type="password"
+          [placeholder]="t('Crie uma senha com pelo menos 8 caracteres', 'Create a password with at least 8 characters')"
+          autocomplete="new-password"
+          [(ngModel)]="senha"
+          required
+          minlength="8"
+          maxlength="72"
+          [disabled]="carregando"
+          (focus)="tocarSom('focus')"
+        >
+      </div>
+
+      <div class="form-group">
+        <label for="confirmarSenha">{{ t('Confirmar senha', 'Confirm password') }}</label>
+        <input
+          id="confirmarSenha"
+          name="confirmarSenha"
+          type="password"
+          [placeholder]="t('Digite a senha novamente', 'Enter your password again')"
+          autocomplete="new-password"
+          [(ngModel)]="confirmarSenha"
+          required
+          [disabled]="carregando"
+          (focus)="tocarSom('focus')"
+        >
+      </div>
+
+      @if (mensagemErro) {
+        <p class="register-error" role="alert">{{ mensagemErro }}</p>
+      }
+
+      @if (mensagemSucesso) {
+        <p class="register-success" role="status">{{ mensagemSucesso }}</p>
+      }
+
+      <button
+        type="submit"
+        class="login-submit"
+        [disabled]="registerForm.invalid || carregando"
+        (click)="tocarSom('click')"
+      >
+        {{ carregando ? t('Criando conta...', 'Creating account...') : t('Criar conta', 'Create account') }}
+      </button>
+    </form>
+
+    <div class="login-footer">
+      <span>{{ t('Já possui uma conta?', 'Already have an account?') }}</span>
+      <a routerLink="/login" (click)="tocarSom('click')">
+        {{ t('Entrar', 'Sign in') }}
+      </a>
+    </div>
+  </div>
+</section>

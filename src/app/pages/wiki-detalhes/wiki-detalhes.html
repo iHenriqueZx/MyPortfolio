@@ -1,0 +1,52 @@
+<section class="wiki-article-page">
+  <a class="wiki-back" routerLink="/wiki">
+    <span aria-hidden="true">←</span>
+    {{ t('Voltar para a Wiki', 'Back to Wiki') }}
+  </a>
+
+  @if (carregando) {
+    <p class="wiki-message">
+      {{ t('Carregando artigo...', 'Loading article...') }}
+    </p>
+  } @else if (erro) {
+    <div class="wiki-error">
+      <h1>{{ t('Artigo indisponível', 'Article unavailable') }}</h1>
+      <p>{{ erro }}</p>
+
+      <a routerLink="/wiki">
+        <span aria-hidden="true">←</span>
+        {{ t('Ver artigos publicados', 'View published articles') }}
+      </a>
+    </div>
+  } @else if (pagina; as artigo) {
+    <article class="wiki-article" [attr.data-slug]="artigo.slug">
+      <div class="wiki-article-meta">
+        <span class="wiki-category">
+          {{ categoria(artigo.categoria) }}
+        </span>
+
+        @if (artigo.plugin) {
+          <span>{{ artigo.plugin.nome }} {{ artigo.plugin.versao }}</span>
+        }
+      </div>
+
+      <h1>{{ artigo.titulo }}</h1>
+
+      @if (artigo.dataAtualizacao) {
+        <p class="wiki-updated">
+          {{ t('Última atualização:', 'Last updated:') }}
+          {{ artigo.dataAtualizacao | date:'dd/MM/yyyy' }}
+        </p>
+      }
+
+      <div class="wiki-article-content">{{ artigo.conteudo }}</div>
+
+      <footer class="wiki-article-footer">
+        <a routerLink="/wiki">
+          <span aria-hidden="true">←</span>
+          {{ t('Voltar para todos os artigos', 'Back to all articles') }}
+        </a>
+      </footer>
+    </article>
+  }
+</section>

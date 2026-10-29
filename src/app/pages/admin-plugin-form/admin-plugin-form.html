@@ -1,0 +1,204 @@
+<section class="plugin-form-page">
+  <header class="form-page-header">
+    <div>
+      <a class="back-link" routerLink="/admin/plugins">← {{ t('Voltar para meus plugins', 'Back to My Plugins') }}</a>
+      <span class="page-eyebrow">{{ t('GERENCIAMENTO', 'MANAGEMENT') }}</span>
+      <h1>{{ editando ? t('Editar plugin', 'Edit Plugin') : t('Adicionar plugin', 'Add Plugin') }}</h1>
+      <p>
+        {{ editando
+          ? t('Atualize as informações do plugin no marketplace.', 'Update the plugin information in the marketplace.')
+          : t('Preencha as informações para cadastrar um novo plugin.', 'Fill in the details to register a new plugin.') }}
+      </p>
+    </div>
+  </header>
+
+  @if (erro) {
+    <div class="form-alert form-alert-error">{{ erro }}</div>
+  }
+
+  @if (sucesso) {
+    <div class="form-alert form-alert-success">{{ sucesso }}</div>
+  }
+
+  @if (carregando) {
+    <div class="form-panel loading-panel">{{ t('Carregando dados do plugin...', 'Loading plugin data...') }}</div>
+  } @else {
+    <form class="plugin-form" (ngSubmit)="salvar()" #pluginForm="ngForm">
+      <section class="form-panel">
+        <div class="form-section-header">
+          <span class="section-number">01</span>
+          <div>
+            <h2>{{ t('Informações principais', 'Basic Information') }}</h2>
+            <p>{{ t('Os dados que serão exibidos no marketplace.', 'The information displayed in the marketplace.') }}</p>
+          </div>
+        </div>
+
+        <div class="form-grid">
+          <label class="form-field">
+            <span>{{ t('Nome do plugin', 'Plugin Name') }} *</span>
+            <input
+              type="text"
+              name="nome"
+              [(ngModel)]="plugin.nome"
+              required
+              maxlength="100"
+              [placeholder]="t('Ex.: LIZTalismans', 'e.g. LIZTalismans')"
+            >
+          </label>
+
+          <label class="form-field">
+            <span>{{ t('Versão', 'Version') }} *</span>
+            <input
+              type="text"
+              name="versao"
+              [(ngModel)]="plugin.versao"
+              required
+              maxlength="30"
+              [placeholder]="t('Ex.: 1.0.0', 'e.g. 1.0.0')"
+            >
+          </label>
+
+          <label class="form-field full-width">
+            <span>{{ t('Descrição', 'Description') }} *</span>
+            <textarea
+              name="descricao"
+              [(ngModel)]="plugin.descricao"
+              required
+              maxlength="2000"
+              rows="5"
+              [placeholder]="t('Descreva as funções e os diferenciais do plugin...', 'Describe the plugin features and what makes it unique...')"
+            ></textarea>
+          </label>
+
+          <label class="form-field">
+            <span>{{ t('Tecnologias', 'Technologies') }}</span>
+            <input
+              type="text"
+              name="tecnologias"
+              [(ngModel)]="plugin.tecnologias"
+              placeholder="Paper, Java, Minecraft"
+            >
+            <small>{{ t('Separe as tecnologias por vírgulas.', 'Separate technologies with commas.') }}</small>
+          </label>
+
+          <label class="form-field">
+            <span>{{ t('Categoria', 'Category') }} *</span>
+            <select
+              name="categoria"
+              [(ngModel)]="plugin.categoria"
+              required
+            >
+              <option value="Gameplay">Gameplay</option>
+              <option value="Administração">{{ t('Administração', 'Administration') }}</option>
+              <option value="Customização">{{ t('Customização', 'Customization') }}</option>
+              <option value="Economia">{{ t('Economia', 'Economy') }}</option>
+              <option value="Utilidades">{{ t('Utilidades', 'Utilities') }}</option>
+              <option value="Outros">{{ t('Outros', 'Other') }}</option>
+            </select>
+          </label>
+
+          <label class="form-field">
+            <span>{{ t('Ícone ou emoji', 'Icon or Emoji') }}</span>
+            <input
+              type="text"
+              name="icone"
+              [(ngModel)]="plugin.icone"
+              maxlength="500"
+              [placeholder]="t('Ex.: ⚔️', 'e.g. ⚔️')"
+            >
+          </label>
+        </div>
+      </section>
+
+      <section class="form-panel">
+        <div class="form-section-header">
+          <span class="section-number">02</span>
+          <div>
+            <h2>{{ t('Preço e distribuição', 'Pricing and Distribution') }}</h2>
+            <p>{{ t('Defina como os usuários terão acesso ao plugin.', 'Choose how users can access the plugin.') }}</p>
+          </div>
+        </div>
+
+        <label class="free-toggle">
+          <input
+            type="checkbox"
+            name="gratuito"
+            [(ngModel)]="plugin.gratuito"
+            (ngModelChange)="aoAlterarGratuito()"
+          >
+          <span class="toggle-content">
+            <strong>{{ t('Plugin gratuito', 'Free Plugin') }}</strong>
+            <small>{{ t('Disponibilizar sem cobrança no marketplace.', 'Make the plugin available for free in the marketplace.') }}</small>
+          </span>
+        </label>
+
+        @if (!plugin.gratuito) {
+          <label class="form-field price-field">
+            <span>{{ t('Preço em reais (R$)', 'Price in Brazilian Reais (R$)') }} *</span>
+            <input
+              type="number"
+              name="preco"
+              [(ngModel)]="plugin.preco"
+              required
+              min="0.01"
+              step="0.01"
+              placeholder="29.90"
+            >
+          </label>
+        }
+
+        <div class="form-grid links-grid">
+          <label class="form-field full-width">
+            <span>{{ t('Arquivo do plugin (.jar)', 'Plugin File (.jar)') }}</span>
+            <input
+              type="file"
+              name="arquivoJar"
+              accept=".jar,application/java-archive"
+              (change)="aoSelecionarArquivo($event)"
+            >
+            <small>
+              {{ t('Tamanho máximo: 100 MB. O arquivo precisa conter plugin.yml ou paper-plugin.yml.', 'Maximum size: 100 MB. The file must contain plugin.yml or paper-plugin.yml.') }}
+            </small>
+            @if (arquivoSelecionado) {
+              <small>{{ t('Selecionado:', 'Selected:') }} {{ arquivoSelecionado.name }}</small>
+            }
+            @if (editando && !arquivoSelecionado) {
+              <small>
+                {{ t('Deixe vazio para manter o arquivo já enviado. Se selecionar outro JAR, ele substituirá o arquivo associado.', 'Leave empty to keep the previously uploaded file. Selecting another JAR will replace the associated file.') }}
+              </small>
+            }
+          </label>
+
+          <label class="form-field full-width">
+            <span>{{ t('Vídeo de demonstração', 'Demo Video') }}</span>
+            <input
+              type="url"
+              name="videoDemonstracao"
+              [(ngModel)]="plugin.videoDemonstracao"
+              maxlength="1000"
+              placeholder="https://www.youtube.com/watch?v=..."
+            >
+          </label>
+        </div>
+      </section>
+
+      <footer class="form-actions">
+        <a class="cancel-button" routerLink="/admin/plugins">{{ t('Cancelar', 'Cancel') }}</a>
+
+        <button
+          type="submit"
+          class="save-button"
+          [disabled]="pluginForm.invalid || salvando || enviandoArquivo"
+        >
+          @if (salvando) {
+            {{ t('Salvando informações...', 'Saving information...') }}
+          } @else if (enviandoArquivo) {
+            {{ t('Enviando arquivo...', 'Uploading file...') }}
+          } @else {
+            {{ editando ? t('Salvar alterações', 'Save Changes') : t('Cadastrar plugin', 'Register Plugin') }}
+          }
+        </button>
+      </footer>
+    </form>
+  }
+</section>

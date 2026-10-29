@@ -1,0 +1,228 @@
+<main class="profile-page">
+  <div class="profile-container">
+    <a routerLink="/" class="back-link">← {{ t('Voltar para a loja', 'Back to store') }}</a>
+
+    <section class="profile-heading">
+      <div class="avatar">{{ perfil?.nomeUsuario?.charAt(0)?.toUpperCase() || '?' }}</div>
+
+      <div class="heading-info">
+        <span class="eyebrow">{{ t('CENTRAL DO JOGADOR', 'PLAYER HUB') }}</span>
+        <h1>{{ perfil?.nomeUsuario || t('Meu perfil', 'My profile') }}</h1>
+        <p>{{ t('Gerencie sua conta e acompanhe sua jornada na LIZ Plugins.', 'Manage your account and track your journey on LIZ Plugins.') }}</p>
+      </div>
+
+      <div class="heading-actions">
+        <a routerLink="/pedidos" class="secondary-button">
+          {{ t('Histórico de pedidos', 'Order history') }}
+        </a>
+
+        <button class="logout-button" type="button" (click)="sair()">
+          {{ t('Sair da conta', 'Log out') }}
+        </button>
+      </div>
+
+    </section>
+
+    @if (carregando) {
+      <div class="notice">{{ t('Carregando seu perfil...', 'Loading your profile...') }}</div>
+    }
+
+    @if (erro) {
+      <div class="notice error">{{ erro }}</div>
+    }
+
+    @if (mensagem) {
+      <div class="notice success">{{ mensagem }}</div>
+    }
+
+    @if (perfil && !carregando) {
+      <section class="rank-card">
+        <div>
+          <span class="eyebrow">{{ t('SUA JORNADA', 'YOUR JOURNEY') }}</span>
+          <h2>{{ t('Iniciante', 'Beginner') }}</h2>
+          <p>{{ t('Seu progresso começa aqui. Faça sua primeira compra para iniciar sua ascensão.', 'Your progress starts here. Make your first purchase to begin your rise.') }}</p>
+        </div>
+        <div class="rank-emblem">I</div>
+        <div class="rank-progress">
+          <div class="progress-label">
+            <span>{{ t('Progresso para Recruta', 'Progress toward Recruit') }}</span>
+            <span>{{ t('Disponível após as compras', 'Available after purchases') }}</span>
+          </div>
+          <div class="progress-track">
+            <div class="progress-fill"></div>
+          </div>
+        </div>
+        <p class="rank-note">{{ t('Cargo demonstrativo: a progressão será calculada com base nas compras confirmadas.', 'Demo rank: progression will be calculated based on confirmed purchases.') }}</p>
+      </section>
+
+      <section class="stats-grid">
+        <article class="stat-card">
+          <span>{{ t('Gasto acumulado', 'Total spent') }}</span>
+          <strong>—</strong>
+          <small>{{ t('Disponível após a implementação das compras', 'Available once purchases are implemented') }}</small>
+        </article>
+
+        <article class="stat-card">
+          <span>{{ t('Plugins adquiridos', 'Plugins acquired') }}</span>
+          <strong>—</strong>
+          <small>{{ t('Seu histórico será exibido aqui', 'Your history will appear here') }}</small>
+        </article>
+
+        <article class="stat-card">
+          <span>{{ t('Posição no ranking', 'Leaderboard position') }}</span>
+          <strong>—</strong>
+          <small>{{ t('Ranking baseado em compras confirmadas', 'Leaderboard based on confirmed purchases') }}</small>
+        </article>
+      </section>
+
+      <section class="profile-grid">
+        <article class="panel">
+          <div class="panel-heading">
+            <span class="panel-icon">01</span>
+            <div>
+              <h2>{{ t('Dados da conta', 'Account details') }}</h2>
+              <p>{{ t('Informações cadastradas na plataforma.', 'Information registered on the platform.') }}</p>
+            </div>
+          </div>
+
+          <div class="account-field">
+            <label for="nomeUsuario">{{ t('Nome de usuário', 'Username') }}</label>
+            <input
+              id="nomeUsuario"
+              type="text"
+              name="nomeUsuario"
+              [(ngModel)]="nomeUsuario"
+              minlength="3"
+              maxlength="30"
+              pattern="[a-zA-Z0-9_]+"
+              autocomplete="username"
+              required
+            />
+            <small>{{ t('De 3 a 30 caracteres. Use letras, números ou _.', '3 to 30 characters. Use letters, numbers, or _.') }}</small>
+            <button
+              class="primary-button"
+              type="button"
+              [disabled]="salvandoNome"
+              (click)="alterarNomeUsuario()"
+            >
+              {{ salvandoNome ? t('Salvando...', 'Saving...') : t('Alterar nome de usuário', 'Change username') }}
+            </button>
+          </div>
+
+          <div class="account-field">
+            <label>{{ t('Tipo de conta', 'Account type') }}</label>
+            <div class="readonly-value">{{ traduzirPapel(perfil.papel) }}</div>
+          </div>
+
+          <div class="account-field">
+            <label>{{ t('Data de cadastro', 'Registration date') }}</label>
+            <div class="readonly-value">{{ perfil.dataCadastro | date:'dd/MM/yyyy' }}</div>
+          </div>
+
+          <form (ngSubmit)="alterarEmail()">
+            <h3>{{ t('Alterar e-mail', 'Change email') }}</h3>
+
+            <div class="account-field">
+              <label for="email">{{ t('Novo e-mail', 'New email') }}</label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                [(ngModel)]="email"
+                autocomplete="email"
+                required
+              />
+            </div>
+
+            <div class="account-field">
+              <label for="senhaAtualEmail">{{ t('Senha atual', 'Current password') }}</label>
+              <input
+                id="senhaAtualEmail"
+                name="senhaAtualEmail"
+                type="password"
+                [(ngModel)]="senhaAtualEmail"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+
+            <button class="primary-button" type="submit" [disabled]="salvandoEmail">
+              {{ salvandoEmail ? t('Salvando...', 'Saving...') : t('Salvar novo e-mail', 'Save new email') }}
+            </button>
+          </form>
+        </article>
+
+        <article class="panel">
+          <div class="panel-heading">
+            <span class="panel-icon">02</span>
+            <div>
+              <h2>{{ t('Segurança', 'Security') }}</h2>
+              <p>{{ t('Mantenha sua conta protegida.', 'Keep your account secure.') }}</p>
+            </div>
+          </div>
+
+          <form (ngSubmit)="alterarSenha()">
+            <div class="account-field">
+              <label for="senhaAtual">{{ t('Senha atual', 'Current password') }}</label>
+              <input
+                id="senhaAtual"
+                name="senhaAtual"
+                type="password"
+                [(ngModel)]="senhaAtual"
+                autocomplete="current-password"
+                required
+              />
+            </div>
+
+            <div class="account-field">
+              <label for="novaSenha">{{ t('Nova senha', 'New password') }}</label>
+              <input
+                id="novaSenha"
+                name="novaSenha"
+                type="password"
+                [(ngModel)]="novaSenha"
+                autocomplete="new-password"
+                minlength="8"
+                required
+              />
+              <small>{{ t('Mínimo de 8 caracteres.', 'At least 8 characters.') }}</small>
+            </div>
+
+            <div class="account-field">
+              <label for="confirmarSenha">{{ t('Confirmar nova senha', 'Confirm new password') }}</label>
+              <input
+                id="confirmarSenha"
+                name="confirmarSenha"
+                type="password"
+                [(ngModel)]="confirmarSenha"
+                autocomplete="new-password"
+                required
+              />
+            </div>
+
+            <button class="primary-button" type="submit" [disabled]="salvandoSenha">
+              {{ salvandoSenha ? t('Atualizando...', 'Updating...') : t('Alterar senha', 'Change password') }}
+            </button>
+          </form>
+        </article>
+      </section>
+
+      <section class="panel library-panel">
+        <div class="panel-heading">
+          <span class="panel-icon">03</span>
+          <div>
+            <h2>{{ t('Minha biblioteca', 'My library') }}</h2>
+            <p>{{ t('Seus plugins adquiridos ficarão disponíveis nesta área.', 'Your purchased plugins will be available in this area.') }}</p>
+          </div>
+        </div>
+
+        <div class="empty-library">
+          <span class="library-symbol">◇</span>
+          <h3>{{ t('Sua biblioteca está sendo preparada', 'Your library is being prepared') }}</h3>
+          <p>{{ t('Quando o sistema de compras estiver pronto, seus plugins adquiridos e downloads ficarão reunidos aqui.', 'Once the purchasing system is ready, your purchased plugins and downloads will be collected here.') }}</p>
+          <a routerLink="/plugins" class="secondary-button">{{ t('Explorar plugins', 'Explore plugins') }}</a>
+        </div>
+      </section>
+    }
+  </div>
+</main>

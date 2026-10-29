@@ -1,0 +1,290 @@
+
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.plugin-form-page {
+  min-height: 100%;
+  padding: 36px;
+  color: #f5f5f7;
+  background: #0b0b10;
+}
+
+.form-page-header {
+  margin-bottom: 28px;
+}
+
+.back-link {
+  display: block;
+  width: fit-content;
+  margin-bottom: 24px;
+  color: #b6b6c4;
+  font-size: 13px;
+  text-decoration: none;
+}
+
+.back-link:hover {
+  color: #ff49ac;
+}
+
+.page-eyebrow {
+  color: #ff008c;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.form-page-header h1 {
+  margin: 8px 0;
+  font-size: 32px;
+}
+
+.form-page-header p {
+  margin: 0;
+  color: #9999a8;
+}
+
+.plugin-form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  max-width: 1050px;
+}
+
+.form-panel {
+  border: 1px solid #292932;
+  border-radius: 15px;
+  padding: 26px;
+  background: #14141b;
+}
+
+.form-section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 25px;
+}
+
+.section-number {
+  display: grid;
+  width: 43px;
+  height: 43px;
+  flex-shrink: 0;
+  place-items: center;
+  border: 1px solid #49233b;
+  border-radius: 12px;
+  color: #ff49ac;
+  background: #251522;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.form-section-header h2 {
+  margin: 0 0 6px;
+  font-size: 18px;
+}
+
+.form-section-header p {
+  margin: 0;
+  color: #9999a8;
+  font-size: 13px;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  min-width: 0;
+  color: #dedee7;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.full-width {
+  grid-column: 1 / -1;
+}
+
+.form-field input,
+.form-field textarea,
+.form-field select {
+  width: 100%;
+  box-sizing: border-box;
+  border: 1px solid #343440;
+  border-radius: 9px;
+  outline: none;
+  padding: 13px 14px;
+  color: #f5f5f7;
+  background: #1b1b24;
+  font: inherit;
+  font-weight: 400;
+}
+
+.form-field input:focus,
+.form-field textarea:focus,
+.form-field select:focus {
+  border-color: #ff008c;
+  box-shadow: 0 0 0 3px rgb(255 0 140 / 9%);
+}
+
+.form-field textarea {
+  resize: vertical;
+  line-height: 1.6;
+}
+
+.form-field small {
+  color: #898997;
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+
+.free-toggle {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  border: 1px solid #343440;
+  border-radius: 11px;
+  padding: 17px;
+  background: #1b1b24;
+  cursor: pointer;
+}
+
+.free-toggle input {
+  width: 18px;
+  height: 18px;
+  accent-color: #ff008c;
+}
+
+.toggle-content {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.toggle-content strong {
+  font-size: 13px;
+}
+
+.toggle-content small {
+  color: #9999a8;
+  font-size: 12px;
+}
+
+.price-field {
+  max-width: 360px;
+  margin-top: 20px;
+}
+
+.links-grid {
+  margin-top: 24px;
+}
+
+.form-actions {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding-bottom: 30px;
+}
+
+.cancel-button,
+.save-button {
+  display: inline-flex;
+  min-height: 43px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 9px;
+  padding: 0 18px;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.cancel-button {
+  color: #d1d1dc;
+  border-color: #343440;
+  background: #1b1b24;
+}
+
+.save-button {
+  color: white;
+  background: #ff008c;
+}
+
+.save-button:hover:not(:disabled) {
+  background: #d90077;
+}
+
+.save-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.form-alert {
+  max-width: 1000px;
+  margin-bottom: 20px;
+  border: 1px solid;
+  border-radius: 9px;
+  padding: 14px 16px;
+  font-size: 13px;
+}
+
+.form-alert-error {
+  color: #ffb4b4;
+  border-color: #65313d;
+  background: #301b23;
+}
+
+.form-alert-success {
+  color: #8ee5b7;
+  border-color: #285b43;
+  background: #172b21;
+}
+
+.loading-panel {
+  max-width: 1000px;
+  color: #aaaab8;
+}
+
+@media (max-width: 700px) {
+  .plugin-form-page {
+    padding: 20px;
+  }
+
+  .form-page-header h1 {
+    font-size: 27px;
+  }
+
+  .form-panel {
+    padding: 19px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .full-width {
+    grid-column: auto;
+  }
+
+  .form-actions {
+    align-items: stretch;
+    flex-direction: column-reverse;
+  }
+
+  .cancel-button,
+  .save-button {
+    width: 100%;
+    box-sizing: border-box;
+  }
+}

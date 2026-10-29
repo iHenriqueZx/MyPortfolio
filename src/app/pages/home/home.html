@@ -1,0 +1,149 @@
+
+<div class="mouse-glow" aria-hidden="true"></div>
+
+<section class="hero">
+  <div class="hero-content">
+
+    <h1>
+      {{ t('Plugins para elevar', 'Plugins to elevate') }}
+      <span>{{ t('seu servidor Minecraft.', 'your Minecraft server.') }}</span>
+    </h1>
+
+    <p>
+      {{ t('Encontre plugins desenvolvidos para melhorar a experiência, administração e jogabilidade do seu servidor.', 'Discover plugins designed to improve your server experience, management, and gameplay.') }}
+    </p>
+
+    <div class="hero-actions">
+      <a class="primary-button" routerLink="/plugins">
+        {{ t('Explorar plugins', 'Explore plugins') }}
+      </a>
+
+      <a class="secondary-button" routerLink="/wiki">
+        {{ t('Conheça a Wiki', 'Explore the Wiki') }}
+      </a>
+    </div>
+  </div>
+</section>
+
+<section class="featured-section">
+  <div class="section-header">
+    <div>
+      <span class="section-label">{{ t('DESTAQUES', 'FEATURED') }}</span>
+      <h2>{{ t('Plugins em destaque', 'Featured plugins') }}</h2>
+      <p>{{ t('Confira os três plugins mais baixados da plataforma.', 'Check out the three most downloaded plugins on the platform.') }}</p>
+    </div>
+
+    <a class="view-all" routerLink="/plugins">
+      {{ t('Ver todos', 'View all') }}
+    </a>
+  </div>
+
+  @if (carregandoDestaques) {
+    <p class="plugins-message">
+      {{ t('Carregando plugins em destaque...', 'Loading featured plugins...') }}
+    </p>
+  } @else if (erroDestaques) {
+    <div class="plugins-message">
+      <p>{{ erroDestaques }}</p>
+      <button type="button" (click)="carregarDestaques()">
+        {{ t('Tentar novamente', 'Try again') }}
+      </button>
+    </div>
+  } @else if (pluginsEmDestaque.length === 0) {
+    <p class="plugins-message">
+      {{ t('Nenhum plugin disponível no momento.', 'No plugins available at the moment.') }}
+    </p>
+  } @else {
+    <div class="plugins-grid">
+      @for (plugin of pluginsEmDestaque; track plugin.id) {
+        <article class="plugin-card">
+          <div class="plugin-card-header">
+            <div class="plugin-icon">
+              {{ plugin.icone || plugin.nome.charAt(0).toUpperCase() }}
+            </div>
+
+            <span class="plugin-version">{{ plugin.versao }}</span>
+          </div>
+
+          <div class="plugin-card-content">
+            <h3>{{ plugin.nome }}</h3>
+            <p>{{ plugin.descricao }}</p>
+
+            <div class="plugin-tags">
+              @for (tecnologia of obterTecnologias(plugin); track tecnologia) {
+                <span>{{ tecnologia }}</span>
+              }
+            </div>
+          </div>
+
+          <div class="plugin-card-footer">
+            <span class="plugin-price">{{ formatarPreco(plugin) }}</span>
+
+            @if (plugin.gratuito && obterDownload(plugin)) {
+              <a class="plugin-button" [href]="obterDownload(plugin)">
+                {{ t('Download', 'Download') }}
+              </a>
+            } @else if (!plugin.gratuito) {
+              <span class="plugin-button">{{ t('Pago', 'Paid') }}</span>
+            } @else {
+              <span class="plugin-button">{{ t('Em breve', 'Coming soon') }}</span>
+            }
+          </div>
+        </article>
+      }
+    </div>
+  }
+</section>
+
+<section class="categories-section">
+  <div class="section-header centered">
+    <span class="section-label">{{ t('CATEGORIAS', 'CATEGORIES') }}</span>
+
+    <h2>{{ t('Encontre o que você precisa', 'Find what you need') }}</h2>
+
+    <p>
+      {{ t('Explore diferentes tipos de recursos para seu servidor.', 'Explore different types of resources for your server.') }}
+    </p>
+  </div>
+
+  <div class="categories-grid">
+    <a class="category-card" routerLink="/plugins">
+      <span class="category-icon">⚔</span>
+      <div>
+        <h3>Gameplay</h3>
+        <p>{{ t('Plugins para melhorar a experiência dos jogadores.', 'Plugins to improve the player experience.') }}</p>
+      </div>
+    </a>
+
+    <a class="category-card" routerLink="/plugins">
+      <span class="category-icon">⚙</span>
+      <div>
+        <h3>{{ t('Administração', 'Administration') }}</h3>
+        <p>{{ t('Ferramentas para facilitar o gerenciamento do servidor.', 'Tools to make server management easier.') }}</p>
+      </div>
+    </a>
+
+    <a class="category-card" routerLink="/plugins">
+      <span class="category-icon">✨</span>
+      <div>
+        <h3>{{ t('Customização', 'Customization') }}</h3>
+        <p>{{ t('Adicione novos sistemas e possibilidades ao Minecraft.', 'Add new systems and possibilities to Minecraft.') }}</p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="footer-content">
+    <div>
+      <strong>LIZ PLUGINS</strong>
+      <p>
+        {{ t('Plugins e ferramentas para servidores Minecraft.', 'Plugins and tools for Minecraft servers.') }}
+      </p>
+    </div>
+
+    <span>
+      {{ t('© 2026 LIZ Plugins — Todos os direitos reservados.', '© 2026 LIZ Plugins — All rights reserved.') }}
+    </span>
+  </div>
+</footer>

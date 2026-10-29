@@ -1,0 +1,137 @@
+<main class="orders-page">
+  <div class="orders-container">
+    <a routerLink="/perfil" class="back-link">
+      ← {{ t('Voltar para o perfil', 'Back to profile') }}
+    </a>
+
+    <header class="orders-header">
+      <div>
+        <span class="eyebrow">
+          {{ t('CENTRAL DO JOGADOR', 'PLAYER HUB') }}
+        </span>
+
+        <h1>{{ t('Histórico de pedidos', 'Order history') }}</h1>
+
+        <p>
+          {{ t(
+            'Acompanhe seus pedidos, valores e status de compra.',
+            'Track your orders, totals, and purchase status.'
+          ) }}
+        </p>
+      </div>
+
+      <a routerLink="/plugins" class="shop-button">
+        {{ t('Explorar plugins', 'Explore plugins') }}
+      </a>
+    </header>
+
+    @if (carregando) {
+      <div class="notice">
+        {{ t('Carregando seus pedidos...', 'Loading your orders...') }}
+      </div>
+    }
+
+    @if (erro) {
+      <div class="notice error" role="alert">
+        <p>{{ erro }}</p>
+
+        <button type="button" (click)="carregarPedidos()">
+          {{ t('Tentar novamente', 'Try again') }}
+        </button>
+      </div>
+    }
+
+    @if (!carregando && !erro && pedidos.length === 0) {
+      <section class="empty-orders">
+        <div class="empty-icon">◇</div>
+
+        <h2>{{ t('Nenhum pedido encontrado', 'No orders found') }}</h2>
+
+        <p>
+          {{ t(
+            'Quando você realizar um pedido, ele aparecerá nesta página.',
+            'When you place an order, it will appear on this page.'
+          ) }}
+        </p>
+
+        <a routerLink="/plugins" class="shop-button">
+          {{ t('Ver plugins', 'Browse plugins') }}
+        </a>
+      </section>
+    }
+
+    @if (!carregando && !erro && pedidos.length > 0) {
+      <div class="orders-summary">
+        <div>
+          <span>{{ t('Total de pedidos', 'Total orders') }}</span>
+          <strong>{{ pedidos.length }}</strong>
+        </div>
+
+        <div>
+          <span>{{ t('Pedidos pendentes', 'Pending orders') }}</span>
+          <strong>{{ pedidosPendentes }}</strong>
+        </div>
+      </div>
+
+      <section class="orders-list">
+        @for (pedido of pedidos; track pedido.id) {
+          <article class="order-card">
+            <div class="order-top">
+              <div>
+                <span class="order-label">
+                  {{ t('PEDIDO', 'ORDER') }}
+                </span>
+
+                <h2>#{{ pedido.id }}</h2>
+              </div>
+
+              <span
+                class="status"
+                [ngClass]="classeStatus(pedido.status)"
+              >
+                {{ traduzirStatus(pedido.status) }}
+              </span>
+            </div>
+
+            <div class="order-date">
+              {{ t('Realizado em', 'Placed on') }}
+              {{ pedido.dataCriacao | date:'dd/MM/yyyy HH:mm' }}
+            </div>
+
+            <div class="order-items">
+              @for (item of pedido.itens; track $index) {
+                <div class="order-item">
+                  <div class="item-info">
+                    <strong>{{ item.nomePlugin }}</strong>
+
+                    <span>
+                      {{ t('Versão', 'Version') }}
+                      {{ item.versaoPlugin }}
+                      ·
+                      {{ t('Quantidade', 'Quantity') }}:
+                      {{ item.quantidade }}
+                    </span>
+                  </div>
+
+                  <strong class="item-price">
+                    {{ formatarPreco(item.subtotal) }}
+                  </strong>
+                </div>
+              }
+            </div>
+
+            <div class="order-footer">
+              <span>
+                {{ t('Total do pedido', 'Order total') }}
+              </span>
+
+              <strong>
+                {{ formatarPreco(pedido.valorTotal) }}
+              </strong>
+            </div>
+          </article>
+        }
+      </section>
+    }
+  </div>
+</main>

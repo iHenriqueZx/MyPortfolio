@@ -1,0 +1,83 @@
+
+<section class="wiki-page">
+  <header class="wiki-header">
+    <span class="wiki-eyebrow">
+      <span class="wiki-status-dot"></span>
+      {{ t('CENTRAL DE CONHECIMENTO', 'KNOWLEDGE BASE') }}
+    </span>
+
+    <h1>Wiki <span>LIZ Plugins</span></h1>
+
+    <p>
+      {{ t(
+        'Encontre guias, tutoriais e informações sobre nossos plugins.',
+        'Find guides, tutorials and information about our plugins.'
+      ) }}
+    </p>
+
+    <div class="wiki-header-line"></div>
+  </header>
+
+  @if (carregando) {
+    <div class="wiki-message wiki-loading">
+      <span class="wiki-loader"></span>
+      {{ t('Carregando artigos...', 'Loading articles...') }}
+    </div>
+  } @else if (erro) {
+    <div class="wiki-message error">
+      <p>{{ erro }}</p>
+      <button type="button" (click)="carregarPaginas()">
+        {{ t('Tentar novamente', 'Try again') }}
+      </button>
+    </div>
+  } @else if (paginas.length === 0) {
+    <div class="wiki-empty">
+      <h2>{{ t('Nenhum artigo publicado', 'No published articles') }}</h2>
+      <p>
+        {{ t(
+          'Os artigos aparecerão aqui quando forem publicados.',
+          'Articles will appear here when they are published.'
+        ) }}
+      </p>
+    </div>
+  } @else {
+    <div class="wiki-grid">
+      @for (pagina of paginas; track pagina.id; let i = $index) {
+        <a
+          class="wiki-card"
+          [routerLink]="['/wiki', pagina.slug]"
+          [style.--card-index]="i"
+        >
+          <div class="wiki-card-content">
+            <div class="wiki-card-top">
+              <span class="wiki-category">
+                {{ categoria(pagina.categoria) }}
+              </span>
+              <span class="wiki-arrow" aria-hidden="true">↗</span>
+            </div>
+
+            <h2>{{ pagina.titulo }}</h2>
+
+            <p class="wiki-description">
+              {{ trecho(pagina.conteudo) }}
+            </p>
+
+            <div class="wiki-card-footer">
+              <span>
+                @if (pagina.plugin) {
+                  {{ pagina.plugin.nome }} {{ pagina.plugin.versao }}
+                } @else {
+                  LIZ Plugins
+                }
+              </span>
+
+              <span class="wiki-read-more">
+                {{ t('Ler artigo', 'Read article') }} →
+              </span>
+            </div>
+          </div>
+        </a>
+      }
+    </div>
+  }
+</section>

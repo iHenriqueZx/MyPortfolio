@@ -1,0 +1,195 @@
+
+<div class="wiki-admin">
+  <header class="page-header">
+    <div>
+      <span class="eyebrow">{{ t('CONTEÚDO', 'CONTENT') }}</span>
+      <h1>Wiki</h1>
+      <p>{{ t('Crie e gerencie a documentação dos seus plugins.', 'Create and manage your plugin documentation.') }}</p>
+    </div>
+
+    <button class="primary-button" type="button" (click)="novoArtigo()">
+      + {{ t('Novo artigo', 'New article') }}
+    </button>
+  </header>
+
+  <div class="feedback success" *ngIf="mensagem">
+    {{ mensagem }}
+  </div>
+
+  <div class="feedback error" *ngIf="erro">
+    {{ erro }}
+  </div>
+
+  <div class="wiki-layout">
+    <section class="editor-panel">
+      <div class="panel-header">
+        <div>
+          <h2>{{ paginaEditandoId ? t('Editar artigo', 'Edit article') : t('Novo artigo', 'New article') }}</h2>
+          <p>{{ t('Configure os dados e o conteúdo da página.', 'Configure the page details and content.') }}</p>
+        </div>
+
+        <span class="status" [class.published]="formulario.publicado">
+          {{ formulario.publicado ? t('Publicado', 'Published') : t('Rascunho', 'Draft') }}
+        </span>
+      </div>
+
+      <form (ngSubmit)="salvar()">
+        <div class="field">
+          <label for="titulo">{{ t('Título', 'Title') }}</label>
+          <input
+            id="titulo"
+            name="titulo"
+            [(ngModel)]="formulario.titulo"
+            (ngModelChange)="gerarSlug()"
+            maxlength="150"
+            [placeholder]="t('Ex.: Feitiços do LIZMagic', 'E.g.: LIZMagic Spells')"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="slug">{{ t('Endereço da página', 'Page URL') }}</label>
+          <div class="slug-field">
+            <span>/wiki/</span>
+            <input
+              id="slug"
+              name="slug"
+              [(ngModel)]="formulario.slug"
+              maxlength="180"
+              placeholder="feiticos-lizmagic"
+              required
+            />
+          </div>
+          <small>{{ t('Use letras minúsculas, números e hífens.', 'Use lowercase letters, numbers and hyphens.') }}</small>
+        </div>
+
+        <div class="field">
+          <label for="categoria">{{ t('Categoria', 'Category') }}</label>
+          <input
+            id="categoria"
+            name="categoria"
+            [(ngModel)]="formulario.categoria"
+            maxlength="100"
+            [placeholder]="t('Ex.: Magia, Instalação, Comandos', 'E.g.: Magic, Installation, Commands')"
+            required
+          />
+        </div>
+
+        <div class="field">
+          <label for="pluginId">{{ t('Plugin relacionado', 'Related plugin') }}</label>
+          <select
+            id="pluginId"
+            name="pluginId"
+            [(ngModel)]="formulario.pluginId"
+          >
+            <option [ngValue]="null">{{ t('Nenhum plugin', 'No plugin') }}</option>
+            <option *ngFor="let plugin of plugins" [ngValue]="plugin.id">
+              {{ plugin.nome }} — {{ plugin.versao }}
+            </option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label for="conteudo">{{ t('Conteúdo', 'Content') }}</label>
+          <textarea
+            id="conteudo"
+            name="conteudo"
+            [(ngModel)]="formulario.conteudo"
+            rows="16"
+            [placeholder]="t('Escreva a documentação aqui...', 'Write the documentation here...')"
+            required
+          ></textarea>
+          <small>{{ t('O conteúdo é salvo como texto. O editor visual será aprimorado depois.', 'Content is saved as plain text. The visual editor will be improved later.') }}</small>
+        </div>
+
+        <label class="publish-toggle">
+          <input
+            type="checkbox"
+            name="publicado"
+            [(ngModel)]="formulario.publicado"
+          />
+          <span>
+            <strong>{{ t('Publicar artigo', 'Publish article') }}</strong>
+            <small>{{ t('Se desmarcado, o artigo ficará como rascunho.', 'If unchecked, the article will remain a draft.') }}</small>
+          </span>
+        </label>
+
+        <div class="form-actions">
+          <button
+            class="secondary-button"
+            type="button"
+            (click)="novoArtigo()"
+          >
+            {{ t('Limpar', 'Clear') }}
+          </button>
+
+          <button
+            class="primary-button"
+            type="submit"
+            [disabled]="salvando"
+          >
+            {{ salvando ? t('Salvando...', 'Saving...') : t('Salvar artigo', 'Save article') }}
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <aside class="articles-panel">
+      <div class="panel-header">
+        <div>
+          <h2>{{ t('Seus artigos', 'Your articles') }}</h2>
+          <p>{{ paginas.length }} {{ t('página(s) cadastrada(s)', 'registered page(s)') }}</p>
+        </div>
+      </div>
+
+      <div class="loading" *ngIf="carregando">
+        {{ t('Carregando artigos...', 'Loading articles...') }}
+      </div>
+
+      <div class="empty-state" *ngIf="!carregando && paginas.length === 0">
+        <span class="empty-icon">▤</span>
+        <strong>{{ t('Nenhum artigo ainda', 'No articles yet') }}</strong>
+        <p>{{ t('Crie o primeiro artigo da Wiki.', 'Create the first Wiki article.') }}</p>
+      </div>
+
+      <article class="article-item" *ngFor="let pagina of paginas">
+        <div class="article-top">
+          <span class="article-category">{{ pagina.categoria }}</span>
+          <span class="status" [class.published]="pagina.publicado">
+            {{ pagina.publicado ? t('Publicado', 'Published') : t('Rascunho', 'Draft') }}
+          </span>
+        </div>
+
+        <h3>{{ pagina.titulo }}</h3>
+        <p class="article-slug">/wiki/{{ pagina.slug }}</p>
+
+        <p class="article-plugin" *ngIf="pagina.plugin">
+          {{ t('Plugin:', 'Plugin:') }} {{ pagina.plugin.nome }}
+        </p>
+
+        <p class="article-date">
+          {{ t('Atualizado em', 'Updated on') }}
+          {{ pagina.dataAtualizacao | date:'dd/MM/yyyy HH:mm' }}
+        </p>
+
+        <div class="article-actions">
+          <button
+            class="secondary-button"
+            type="button"
+            (click)="editar(pagina)"
+          >
+            {{ t('Editar', 'Edit') }}
+          </button>
+
+          <button
+            class="danger-button"
+            type="button"
+            (click)="excluir(pagina)"
+          >
+            {{ t('Excluir', 'Delete') }}
+          </button>
+        </div>
+      </article>
+    </aside>
+  </div>
+</div>
